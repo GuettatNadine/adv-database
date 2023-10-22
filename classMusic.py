@@ -1,6 +1,5 @@
 class User:
-    def __init__(self, userId, userName, adress, email, age, gender, playlists):
-        self.userId = userId
+    def __init__(self, userName, adress, email, age, gender, playlists):
         self.userName = userName
         self.adress = adress
         self.email = email
@@ -9,8 +8,6 @@ class User:
         self.playlists = playlists
 
     # getters
-    def getUserId(self):
-        return self.userId
 
     def getUserName(self):
         return self.userName
@@ -31,8 +28,6 @@ class User:
         return self.playlists
 
     # setters
-    def setUserId(self, newUserId):
-        self.userId = newUserId
 
     def setUserName(self, newUserName):
         self.userName = newUserName
@@ -170,6 +165,7 @@ class Album(MusicGrouping):
 
     def getProducerName(self):
         return self.producerName
+
 
 """
 #TEST
