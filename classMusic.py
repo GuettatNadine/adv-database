@@ -167,13 +167,4 @@ class Album(MusicGrouping):
         return self.producerName
 
 
-"""
-#TEST
-music = Music("HAHA", "POP", 5, True, "Jean", "Frank", "Paul")
-playList = PlayList("22-10-2023")
-user = User(0,"User01","Rue IDK",
-            "User01@gmail.com",20,"M",playList)
-user.playlists.addToMusicList(music)
-print(user.getUserName()," ",user.getAge()," ",user.getEmail()
-      ," ",user.getPlayLists().getMusicList())
-"""
+
