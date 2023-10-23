@@ -3,6 +3,7 @@ import persistent.list
 import ZODB
 import ZODB.FileStorage
 import transaction
+import BTrees.OOBTree
 
 
 class User(persistent.Persistent):
@@ -180,27 +181,42 @@ def createZODB(fileName):
     return db
 
 
-def getTestUser():
-    music = Music("HAHA", "POP", 5,
-                  True, "Jean", "Frank", "Paul")
-    playList = PlayList("22-10-2023")
-    user = User("User01", "Rue IDK",
-                "User01@gmail.com", 20, "M", playList)
-    user.playlists.addToMusicList(music)
-    # print(user.getUserName(), " ", user.getAge(), " ", user.getEmail()
-    #  , " ", user.getPlayLists().getMusicList())
-    return user
+def getTestUsers(n, tree):
+    for i in range(0, n):
+        name = "HAHA" + str(i)
+        genre = "POP" + str(i)
+        duration = i
+        isVideo = (i % 2 == 0)
+        writer = "Jean" + str(i)
+        producer = "Frank" + str(i)
+        artists = "Paul" + str(i)
+        date = "22-10-2023"
+        userName = "User" + str(i)
+        adress = "Rue idk" + str(i)
+        email = userName + "@gmail.com"
+        age = 20 + i
+        gender = "M" if i % 2 == 0 else "F"
+
+        music = Music(name, genre, duration,
+                      isVideo, writer, producer, artists)
+        playList = PlayList(date)
+        user = User(userName, adress,
+                    email, age, gender, playList)
+        user.playlists.addToMusicList(music)
+        tree.insert(str(i), user)
+        # print(user.getUserName(), " ", user.getAge(), " ", user.getEmail()
+        #  , " ", user.getPlayLists().getMusicList())
 
 
 def main():
     choice = input("\"start\" to create the db and inserting an object\n"
-                   "\'load\" to load the database and see the object")
+                   "\'load\" to load the database and see the object\nInput : ")
     if choice == "start":
         db = createZODB("MyZopeOODB.fs")
         connection = db.open()
-        user = getTestUser()
         root = connection.root()
-        root["Users"] = user
+        root['Users'] = BTrees.OOBTree.BTree()
+        getTestUsers(20, root['Users'])
         transaction.commit()
         connection.close()
     if choice == "load":
@@ -208,9 +224,11 @@ def main():
         db = ZODB.DB(storage)
         connection = db.open()
         root = connection.root()
-        user = root["Users"]
-        print(user.getUserName(), " ", user.getAge(), " ", user.getEmail(),
-              " ", user.getPlayLists().getMusicList())
+        usersTree = root["Users"]
+        for userKey in usersTree:
+            user = usersTree[userKey]
+            print(user.getUserName(), " ", user.getAge(), " ", user.getEmail(),
+                  " ", user.getPlayLists().getMusicList())
         connection.close()
     return 0
 
