@@ -15,6 +15,18 @@ class User(persistent.Persistent):
         self.gender = gender
         self.playlists = playlists
 
+    def __eq__(self, other):
+        return self.userName == other.userName
+
+    def __gt__(self, other):
+        return self.age > other.age
+
+    def __lt__(self, other):
+        return self.age < other.age
+
+    def __ne__(self, other):
+        return self.userName != other.userName
+
     # getters
 
     def getUserName(self):
@@ -183,6 +195,7 @@ def createZODB(fileName):
 
 def getTestUsers(n, tree):
     for i in range(0, n):
+        print(i)
         name = "HAHA" + str(i)
         genre = "POP" + str(i)
         duration = i
@@ -203,7 +216,8 @@ def getTestUsers(n, tree):
         user = User(userName, adress,
                     email, age, gender, playList)
         user.playlists.addToMusicList(music)
-        tree.insert(str(i), user)
+        tree.insert(user, str(i))
+        transaction.commit()
         # print(user.getUserName(), " ", user.getAge(), " ", user.getEmail()
         #  , " ", user.getPlayLists().getMusicList())
 
@@ -217,7 +231,6 @@ def main():
         root = connection.root()
         root['Users'] = BTrees.OOBTree.BTree()
         getTestUsers(20, root['Users'])
-        transaction.commit()
         connection.close()
     if choice == "load":
         storage = ZODB.FileStorage.FileStorage('MyZopeOODB.fs')
@@ -225,10 +238,12 @@ def main():
         connection = db.open()
         root = connection.root()
         usersTree = root["Users"]
+        print("done")
         for userKey in usersTree:
             user = usersTree[userKey]
-            print(user.getUserName(), " ", user.getAge(), " ", user.getEmail(),
-                  " ", user.getPlayLists().getMusicList())
+            print(user, ': ', userKey.getUserName())
+            # print(user.getUserName(), " ", user.getAge(), " ", user.getEmail(),
+            #      " ", user.getPlayLists().getMusicList())
         connection.close()
     return 0
 
