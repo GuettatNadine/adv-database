@@ -1,3 +1,4 @@
+#Example file for the classes
 class User:
     def __init__(self, userName, adress, email, age, gender, playlists):
         self.userName = userName
