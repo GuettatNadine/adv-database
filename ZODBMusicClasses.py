@@ -281,7 +281,7 @@ def getTestData(n, tree):
     return numberOfObjects
 
 
-def main():
+def test():
     choice = input("\"start\" to create the db and inserting an object\n"
                    "\'load\" to load the database and see the object\nInput : ")
     if choice == "start":
@@ -307,6 +307,10 @@ def main():
                 "user : " + queryResult.getUserName() + " | " + "id : " + str(queryResult.getUserId()) + " stars")
         print("done")
         connection.close()
+
+
+def main():
+    test()
     return 0
 
 
