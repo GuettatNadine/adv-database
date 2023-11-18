@@ -1,90 +1,187 @@
 import faker
 import numpy as np
-from faker_music import MusicProvider
 import csv
 
 
 def getTestData(n, filename):
     filename += ".csv"
-    albumFile = "Album" + filename
-    playListFile = "PlayList" + filename
-    userFile = "User" + filename
-    musicFile = "Music" + filename
-    albumToMusic = "albumToMusic" + filename  # for relational database
-    playListToMusic = "playListToMusic" + filename  # for relational database
-    userToPlayList = "userToPlayList" + filename  # for relational database
+    galxiesFile = "Galaxies" + filename
+    ShipsFile = "Ships" + filename
+    militaryPersonsFile = "MilitaryPersons" + filename
+    civilianPersonsFile = "CivilianPersons" + filename
+    energyModulesFile = "EnergyModules" + filename
+    weaponModulesFile = "WeaponModules" + filename
+    shieldModulesFile = "ShieldModules" + filename
+    cargoItemsFile = "CargoItems" + filename
 
-    users = n // 2
-    playlistMusics = n // 4
-    albumMusics = n // 20
     numberOfObjects = 0
     fake = faker.Faker()
-    fake.add_provider(MusicProvider)
 
-    with open(albumFile, 'w', newline='') as Afile, open(playListFile, 'w', newline='') as Pfile, \
-            open(userFile, 'w', newline='') as Ufile, open(musicFile, 'w', newline='') as Mfile, \
-            open(albumToMusic, 'w', newline='') as AMfile, open(playListToMusic, 'w', newline='') as PMfile, \
-            open(userToPlayList, 'w', newline='') as UPfile:
+    with open(galxiesFile, 'w', newline='') as Gfile, open(ShipsFile, 'w', newline='') as Sfile, \
+            open(militaryPersonsFile, 'w', newline='') as MPfile, open(civilianPersonsFile, 'w', newline='') as CPfile, \
+            open(energyModulesFile, 'w', newline='') as EMfile, open(weaponModulesFile, 'w', newline='') as WMfile, \
+            open(shieldModulesFile, 'w', newline='') as SMfile, open(cargoItemsFile, 'w', newline='') as CIfile:
 
-        Awriter = csv.writer(Afile)
-        Awriter.writerow(["albumId", "date", "title", "arist", "producer"])  # musicId(s)
+        Gwriter = csv.writer(Gfile)
+        Gwriter.writerow(["galaxy_id", "name", "universe"])
 
-        AMwriter = csv.writer(AMfile)  # for relational database
-        AMwriter.writerow(["albumId", "musicId"])
+        Swriter = csv.writer(Sfile)
+        Swriter.writerow(["ship_id", "affiliation", "type", "galaxy_id"])
 
-        Pwriter = csv.writer(Pfile)
-        Pwriter.writerow(["playListId", "date", "title"])  # musicId(s)
+        MPwriter = csv.writer(MPfile)
+        MPwriter.writerow(["military_id", "name", "age", "rank", "specialization", "ship_id"])
 
-        PMwriter = csv.writer(PMfile)  # for relational database
-        PMwriter.writerow(["playListId", "musicId"])
+        CPwriter = csv.writer(CPfile)
+        CPwriter.writerow(["civilian_id", "name", "age", "occupation", "ship_id"])
 
-        Uwriter = csv.writer(Ufile)
-        Uwriter.writerow(["userId", "userName", "address", "email", "age", "gender"])  # playlistId(s)
+        EMwriter = csv.writer(EMfile)
+        EMwriter.writerow(
+            ["module_id", "brand", "year", "model", "energy", "maxEnergy", "output", "recharge_rate",
+             "ship_id"])
 
-        UPwriter = csv.writer(UPfile)  # for relational database
-        UPwriter.writerow(["userId", "playListId"])
+        WMwriter = csv.writer(WMfile)
+        WMwriter.writerow(
+            ["module_id", "brand", "year", "model", "energy", "maxEnergy", "type", "caliber", "ship_id"])
 
-        Mwriter = csv.writer(Mfile)
-        Mwriter.writerow(
-            ["musicId", "title", "genre", "duration", "isVideo", "writer", "producer", "artists", "albumId"])
+        CIwriter = csv.writer(CIfile)
+        CIwriter.writerow(["item_id", "name", "quantity"])
 
-        # writer.writerow([1, "Lord of the Rings", "Frodo Baggins"])
-        for albums in range(0, albumMusics):
-            gender = np.random.choice(["M", "F"], p=[0.5, 0.5])
-            artist = fake.first_name_male() if gender == "M" else fake.first_name_female()
-            title = fake.word()
-            producer = fake.name()
+        SMwriter = csv.writer(SMfile)
+        SMwriter.writerow(
+            ["module_id", "brand", "year", "model", "energy", "maxEnergy", "size", "ship_id"])
+
+        # generate between 3 to 10 galaxies
+        num_galaxies = np.random.randint(3, 11)
+        num_universes = np.random.randint(1, num_galaxies + 1)
+        galaxy_names = [fake.word() + " galaxy" for _ in range(num_galaxies)]
+        universe_names = [fake.word() + " universe" for _ in range(num_universes)]
+        military_id = 0
+        civilian_id = 0
+        weapons_id = 0
+        energy_id = 0
+        shields_id = 0
+        cargo_item_id = 0
+        for galaxy in range(len(galaxy_names)):
             numberOfObjects += 1
-            Awriter.writerow([albums, fake.date(), fake.word(), artist, producer])  # write on the album file
-            for musics in range(5):
+            Gwriter.writerow([galaxy, galaxy_names[galaxy], np.random.choice(universe_names)])
+
+        num_ships = n
+        affiliations_list = ["amarr", "caldari", "gallente", "ammatar", "khanid kingdom"]
+        ship_type_list = ["transport", "mother", "scout", "combat", "private", "stealth"]
+        mother_ship_specializations = ["communication", "weapons", "navigation"]
+        military_specializations = ["fighter pilot", "pilot", "engineer", "medic", "scout"]
+        manufacturers = ["behring", "klaus & werner", "associated sciences & development", "joker Engineering"]
+        weapon_type = ["plasma", "laser"]
+        cargo_items_list = [
+            "iron", "copper", "sand", "titanium", "aluminum", "gold", "plastic",
+            "diamond", "wood", "silver", "rubber", "glass", "coal", "paper",
+            "meat", "vegetable", "fruit", "cheese", "bread", "fish", "chocolate"
+        ]
+        for ship in range(0, num_ships):
+            numberOfObjects += 1
+            galaxy_location = np.random.randint(0, len(galaxy_names))
+            affiliation = np.random.choice(affiliations_list)
+            ship_type = np.random.choice(ship_type_list)
+            Swriter.writerow([ship, affiliation, ship_type, galaxy_location])
+            if ship_type in ["mother", "scout", "combat", "stealth"]:
+                if ship_type == "mother":
+                    MPwriter.writerow([military_id, fake.name(), np.random.randint(40, 81), 5, "commander", ship])
+                    military_id += 1
+
+                    for _ in range(5):
+                        numberOfObjects += 1
+                        MPwriter.writerow([military_id, fake.name(), np.random.randint(30, 81), np.random.randint(3, 5),
+                                           np.random.choice(mother_ship_specializations), ship])
+                        military_id += 1
+
+                    for _ in range(np.random.randint(10, 101)):
+                        numberOfObjects += 2
+                        MPwriter.writerow([military_id, fake.name(), np.random.randint(18, 81), np.random.randint(0, 3),
+                                           np.random.choice(military_specializations), ship])
+                        military_id += 1
+                        CPwriter.writerow([civilian_id, fake.name(), np.random.randint(18, 81), fake.job(), ship])
+                        civilian_id += 1
+
+                elif ship_type == "stealth":
+                    numberOfObjects += 1
+                    MPwriter.writerow(
+                        [military_id, fake.name(), np.random.randint(18, 81), np.random.randint(0, 3), "pilot", ship])
+                    military_id += 1
+
+                elif ship_type == "scout":
+                    numberOfObjects += 1
+                    MPwriter.writerow(
+                        [military_id, fake.name(), np.random.randint(18, 81), np.random.randint(0, 3), "scout", ship])
+                    military_id += 1
+
+                elif ship_type == "combat":
+                    numberOfObjects += 1
+                    MPwriter.writerow(
+                        [military_id, fake.name(), np.random.randint(18, 81), np.random.randint(0, 3), "fighter pilot",
+                         ship])
+                    military_id += 1
+
+            elif ship_type == "transport":
                 numberOfObjects += 1
-                genre = fake.music_genre()
-                duration = np.random.randint(179, 250)
-                isVideo = np.random.randint(1)
-                writer = fake.name()
-                producer = fake.name()
-                Mwriter.writerow([(albums * 5) + musics, title, genre,
-                                  duration, isVideo, writer, producer, artist])
-                AMwriter.writerow([albums, (albums * 5) + musics])
+                CPwriter.writerow([civilian_id, fake.name(), np.random.randint(18, 80), "pilot", ship])
+                civilian_id += 1
+                num_items_in_cargo = np.random.randint(1, 6)
+                for item in range(num_items_in_cargo):
+                    item_id = np.random.randint(0, len(cargo_items_list))
+                    CIwriter.writerow([cargo_item_id, cargo_items_list[item_id], np.random.randint(1, 10)])
+                    cargo_item_id += 1
 
-        for music in range(0, playlistMusics):
-            numberOfObjects += 1
-            Pwriter.writerow([music, fake.date(), fake.word()])
-            for albums in np.random.choice(albumMusics, np.random.randint(1, 4), replace=False):
-                PMwriter.writerow([music, albums])
+            elif ship_type == "private":
+                numberOfObjects += 1
+                CPwriter.writerow([civilian_id, fake.name(), np.random.randint(18, 80), fake.job(), ship])
+                civilian_id += 1
 
-        for userId in range(0, users):
-            numberOfObjects += 1
-            # date = fake.date()
-            userName = fake.user_name()
-            address = fake.address
-            email = fake.email()
-            age = np.random.randint(17, 110)
-            gender = np.random.choice(["M", "F"], p=[0.5, 0.5])
-            for playList in np.random.choice(playlistMusics, np.random.randint(2, 4), replace=False):
-                UPwriter.writerow([userId, playList])
-            Uwriter.writerow([userId, userName, address,
-                              email, age, gender])
+            if ship_type == "mother":
+                for _ in range(0, np.random.randint(15, 21)):
+                    numberOfObjects += 1
+                    EMwriter.writerow(
+                        [energy_id, np.random.choice(manufacturers), np.random.randint(3000, 5432),
+                         np.random.randint(1, 6), np.random.randint(0, 101), np.random.randint(100, 151),
+                         np.random.randint(5, 11),
+                         np.round(np.random.uniform(0, 10), 1),
+                         ship])
+                    energy_id += 1
+                for _ in range(0, np.random.randint(15, 21)):
+                    numberOfObjects += 1
+                    WMwriter.writerow(
+                        [weapons_id, np.random.choice(manufacturers), np.random.randint(3000, 5432),
+                         np.random.randint(1, 6), np.random.randint(0, 101), np.random.randint(100, 151),
+                         np.random.choice(weapon_type), np.random.randint(3, 6),
+                         ship])
+                    weapons_id += 1
+                for _ in range(0, np.random.randint(15, 21)):
+                    numberOfObjects += 1
+                    SMwriter.writerow([shields_id, np.random.choice(manufacturers), np.random.randint(3000, 5432),
+                                       np.random.randint(1, 6), np.random.randint(0, 101), np.random.randint(100, 151),
+                                       np.random.randint(3, 6),
+                                       ship])
+                    shields_id += 1
+            else:
+                EMwriter.writerow(
+                    [energy_id, np.random.choice(manufacturers), np.random.randint(3000, 5432),
+                     np.random.randint(1, 6), np.random.randint(0, 101), np.random.randint(100, 151),
+                     np.random.randint(5, 11),
+                     np.round(np.random.uniform(0, 10), 1),
+                     ship])
+                WMwriter.writerow(
+                    [weapons_id, np.random.choice(manufacturers), np.random.randint(3000, 5432),
+                     np.random.randint(1, 6), np.random.randint(0, 101), np.random.randint(100, 151),
+                     np.random.choice(weapon_type), np.random.randint(1, 3),
+                     ship])
+                SMwriter.writerow([shields_id, np.random.choice(manufacturers), np.random.randint(3000, 5432),
+                                   np.random.randint(1, 5), np.random.randint(0, 101), np.random.randint(100, 151),
+                                   np.random.randint(1, 3),
+                                   ship])
+                weapons_id += 1
+                energy_id += 1
+                shields_id += 1
+                numberOfObjects += 3
+
     return numberOfObjects
 
 
