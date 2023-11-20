@@ -44,7 +44,7 @@ def getTestData(n, filename):
             ["module_id", "brand", "year", "model", "energy", "maxEnergy", "type", "caliber", "ship_id"])
 
         CIwriter = csv.writer(CIfile)
-        CIwriter.writerow(["item_id", "name", "quantity"])
+        CIwriter.writerow(["item_id", "name", "quantity", "ship_id"])
 
         SMwriter = csv.writer(SMfile)
         SMwriter.writerow(
@@ -128,7 +128,7 @@ def getTestData(n, filename):
                 num_items_in_cargo = np.random.randint(1, 6)
                 for item in range(num_items_in_cargo):
                     item_id = np.random.randint(0, len(cargo_items_list))
-                    CIwriter.writerow([cargo_item_id, cargo_items_list[item_id], np.random.randint(1, 10)])
+                    CIwriter.writerow([cargo_item_id, cargo_items_list[item_id], np.random.randint(1, 10), ship])
                     cargo_item_id += 1
 
             elif ship_type == "private":

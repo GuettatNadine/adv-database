@@ -1,5 +1,4 @@
 import persistent
-import persistent.list
 
 
 class Person(persistent.Persistent):
@@ -8,10 +7,13 @@ class Person(persistent.Persistent):
         self.name = name
         self.age = age
 
+    def __str__(self):
+        return f"{self.identifier} {self.name} {self.age}"
+
     def getIdentifier(self):
         return self.identifier
 
-    def getNameBrand(self):
+    def getName(self):
         return self.name
 
     def getAge(self):
@@ -30,6 +32,10 @@ class MilitaryPerson(Person):
         self.rank = rank
         self.specialization = specialization
 
+    def __str__(self):
+        base_class = super().__str__()
+        return f"{base_class} {self.rank} {self.specialization}"
+
     def getRank(self):
         return self.rank
 
@@ -47,6 +53,10 @@ class CivilianPerson(Person):
     def __init__(self, identifier, name, age, occupation):
         super().__init__(identifier, name, age)
         self.occupation = occupation
+
+    def __str__(self):
+        base_class = super().__str__()
+        return f"{base_class} {self.occupation}"
 
     def getOccupationRank(self):
         return self.occupation

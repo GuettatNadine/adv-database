@@ -1,5 +1,4 @@
 import persistent
-import persistent.list
 import persistent.mapping
 
 
@@ -26,4 +25,4 @@ class Galaxy(persistent.Persistent):
         self.ships[affiliation][ship.getSerialNumber()] = ship
 
     def getShips(self, affiliation):
-        return list(self.ships[affiliation])
+        return list(self.ships[affiliation].values())

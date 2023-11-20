@@ -1,5 +1,4 @@
 import persistent
-import persistent.list
 import persistent.mapping
 
 
@@ -20,10 +19,10 @@ class Ship(persistent.Persistent):
         return self.affiliation
 
     def getCrew(self):
-        return list(self.crew)
+        return list(self.crew.values())
 
     def getModules(self, moduleType):
-        return list(self.modules[moduleType])
+        return list(self.modules[moduleType].values())
 
     def setAffiliation(self, affiliation):
         self.affiliation = affiliation
@@ -43,7 +42,7 @@ class MotherShip(Ship):
         self.passengers = persistent.mapping.PersistentMapping()
 
     def getPassengers(self):
-        return list(self.passengers)
+        return list(self.passengers.values())
 
     def addPassengers(self, passengers):
         for member in passengers:

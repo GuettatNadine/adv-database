@@ -1,9 +1,4 @@
 import persistent
-import persistent.list
-import ZODB
-import ZODB.FileStorage
-import transaction
-import BTrees.OOBTree
 
 
 class Module(persistent.Persistent):
