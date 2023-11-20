@@ -18,9 +18,9 @@ class Galaxy(persistent.Persistent):
     def getUniverse(self):
         return self.universe
 
-    def addShip(self, ship):
+    def addShip(self, ship):  # Add a ship based on it's affiliation
         affiliation = ship.getAffiliation()
-        if not (affiliation in self.ships.keys()):
+        if not (affiliation in self.ships.keys()):  # If the affiliation is new create a new persistent Map
             self.ships[affiliation] = persistent.mapping.PersistentMapping()
         self.ships[affiliation][ship.getSerialNumber()] = ship
 

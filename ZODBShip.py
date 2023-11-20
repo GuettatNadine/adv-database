@@ -27,11 +27,11 @@ class Ship(persistent.Persistent):
     def setAffiliation(self, affiliation):
         self.affiliation = affiliation
 
-    def addCrew(self, crew):
+    def addCrew(self, crew):  # Add Crew member by id
         for member in crew:
             self.crew[member.getIdentifier()] = member
 
-    def addModules(self, moduleType, modules):
+    def addModules(self, moduleType, modules):  # Add Module by type and id
         for module in modules:
             self.modules[moduleType][module.getSerialNumber()] = module
 
@@ -44,7 +44,7 @@ class MotherShip(Ship):
     def getPassengers(self):
         return list(self.passengers.values())
 
-    def addPassengers(self, passengers):
+    def addPassengers(self, passengers):  # Add passenger by id
         for member in passengers:
             self.passengers[member.getIdentifier()] = member
 
@@ -75,12 +75,12 @@ class TransportShip(Ship):
     def setCargo(self, cargo):
         self.cargo = cargo
 
-    def addCargo(self, itemType, number):
+    def addCargo(self, itemType, number):  # Add cargo item by name
         if not (itemType in self.cargo.keys()):
             self.cargo[itemType] = 0
         self.cargo[itemType] += number
 
-    def removeCargo(self, itemType, number):
+    def removeCargo(self, itemType, number):  # Remove Cargo Item by name and only removes the input value
         self.cargo[itemType] -= number
         if self.cargo[itemType] < 0:  # the min is an empty cargo
             self.cargo[itemType] = 0

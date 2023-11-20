@@ -7,7 +7,7 @@ class Person(persistent.Persistent):
         self.name = name
         self.age = age
 
-    def __str__(self):
+    def __str__(self):  # Print
         return f"{self.identifier} {self.name} {self.age}"
 
     def getIdentifier(self):
@@ -32,7 +32,7 @@ class MilitaryPerson(Person):
         self.rank = rank
         self.specialization = specialization
 
-    def __str__(self):
+    def __str__(self):  # Print
         base_class = super().__str__()
         return f"{base_class} {self.rank} {self.specialization}"
 
@@ -54,7 +54,7 @@ class CivilianPerson(Person):
         super().__init__(identifier, name, age)
         self.occupation = occupation
 
-    def __str__(self):
+    def __str__(self):  # Print
         base_class = super().__str__()
         return f"{base_class} {self.occupation}"
 
