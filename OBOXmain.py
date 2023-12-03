@@ -213,7 +213,7 @@ def main():
     # Start the database for the fist time and create the Objects from the CSV files
     if choice == "start":
         # Creating the database
-        db = createOBOX("MyZopeOODB.fs")
+        db = createOBOX("MyOboxOODB.fs")
 
         # Connecting to the database
         connection = db.open()
@@ -238,8 +238,8 @@ def main():
     # Load the objects from the Zope object Database
     if choice == "load":
         # Load the database
-        storage = ZODB.FileStorage.FileStorage('MyZopeOODB.fs')
-        db = ZODB.DB(storage)
+        model = objectbox.Model()
+        db = objectbox.Builder().model(model).directory("MyOBoxOODB.fs").build()
 
         # Start a connection
         connection = db.open()
