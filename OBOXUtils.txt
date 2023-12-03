@@ -1,0 +1,6 @@
+https://github.com/objectbox/objectbox-python
+official git for objectbox
+
+1:.First of all, install the latest version:
+    pip install --upgrade objectbox
+
