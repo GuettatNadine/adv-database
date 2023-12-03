@@ -180,10 +180,29 @@ def insertIntoShips(militaryCsv, civilianCsv, shieldCsv, energyCsv, weaponCsv, c
     return dictShipObj
 
 
-def createZODB(fileName):
-    """Creation of the Zope Object Database"""
-    storage = ZODB.FileStorage.FileStorage(fileName)
-    db = ZODB.DB(storage)
+def createOBOX(fileName):
+    
+    # Configure ObjectBox: should be done only once in the whole program and the "ob" variable should be kept around
+    model = objectbox.Model()
+    model.entity(Person, last_property_id=objectbox.model.IdUid(3, 1003))
+    model.entity(MilitaryPerson, last_property_id=objectbox.model.IdUid(1, 1005))
+    model.entity(CivilianPerson, last_property_id=objectbox.model.IdUid(1, 1006))
+
+    model.entity(Galaxy, last_property_id=objectbox.model.IdUid(3, 1009))
+
+    model.entity(Ship, last_property_id=objectbox.model.IdUid(2, 1011))
+    model.entity(MotherShip, last_property_id=objectbox.model.IdUid(2, 1011))
+    model.entity(OtherShip, last_property_id=objectbox.model.IdUid(1, 1012))
+    model.entity(TransportShip, last_property_id=objectbox.model.IdUid(2, 1011))
+    
+    model.entity(Module, last_property_id=objectbox.model.IdUid(6, 1018))
+    model.entity(EnergyModule, last_property_id=objectbox.model.IdUid(2, 1020))
+    model.entity(WeaponModule, last_property_id=objectbox.model.IdUid(2, 1022))
+    model.entity(ShieldModule, last_property_id=objectbox.model.IdUid(1, 1023))
+
+    model.last_entity_id = objectbox.model.IdUid(12, 12)
+    db = objectbox.Builder().model(model).directory(fileName).build()
+
     return db
 
 
@@ -194,7 +213,7 @@ def main():
     # Start the database for the fist time and create the Objects from the CSV files
     if choice == "start":
         # Creating the database
-        db = createZODB("MyZopeOODB.fs")
+        db = createOBOX("MyZopeOODB.fs")
 
         # Connecting to the database
         connection = db.open()
