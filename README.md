@@ -6,3 +6,4 @@ pip install persistent<br>
 pip install ZODB<br>
 pip install transaction<br>
 pip install BTrees<br>
+pip install --upgrade objectbox
