@@ -1,12 +1,7 @@
-import persistent
 import objectbox
 
-import ZODB.FileStorage
-import transaction
-import BTrees.OOBTree
-
 import OBOXGalaxy as Galaxy
-import OBOXShip   as Ship
+import OBOXShip as Ship
 import OBOXModule as Module
 import OBOXPerson as Person
 
@@ -22,7 +17,6 @@ def insertGalaxy(csvFilePath, tree):
         # Iterate through each row in the CSV file
         for row in csvReader:
             tree["galaxy"].insert(row["galaxy_id"], Galaxy.Galaxy(row["galaxy_id"], row["name"], row["universe"]))
-            transaction.commit()  # Register the modification (transaction) into the database
     return tree
 
 
@@ -64,7 +58,6 @@ def insertShips(csvFilePath, dictShipObj, tree):
 
             # We add the ship
             tree["galaxy"][row["galaxy_id"]].addShip(ship)
-            transaction.commit()  # Register the modification (transaction) into the database
     return tree
 
 
@@ -181,7 +174,6 @@ def insertIntoShips(militaryCsv, civilianCsv, shieldCsv, energyCsv, weaponCsv, c
 
 
 def createOBOX(fileName):
-    
     # Configure ObjectBox: should be done only once in the whole program and the "ob" variable should be kept around
     model = objectbox.Model()
     model.entity(Person, last_property_id=objectbox.model.IdUid(3, 1003))
@@ -194,7 +186,7 @@ def createOBOX(fileName):
     model.entity(MotherShip, last_property_id=objectbox.model.IdUid(2, 1011))
     model.entity(OtherShip, last_property_id=objectbox.model.IdUid(1, 1012))
     model.entity(TransportShip, last_property_id=objectbox.model.IdUid(2, 1011))
-    
+
     model.entity(Module, last_property_id=objectbox.model.IdUid(6, 1018))
     model.entity(EnergyModule, last_property_id=objectbox.model.IdUid(2, 1020))
     model.entity(WeaponModule, last_property_id=objectbox.model.IdUid(2, 1022))

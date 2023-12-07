@@ -1,14 +1,16 @@
 import persistent
 import persistent.mapping
 from objectbox.model import *
+import OBOXShip
 
-@Entity(id=4, uid=4)
-class Galaxy(persistent.Persistent):
+
+@Entity(id=1, uid=1)
+class Galaxy:
     def __init__(self, identifier, name, universe):
-        self.identifier = Property(identifier, id = 1, uid 1007)
-        self.name = Property(name, id = 2, uid 1008)
-        self.universe = Property(universe, id = 3, uid 1009)
-        self.ships = persistent.mapping.PersistentMapping()
+        self.identifier = Property(id=1, uid=1001)
+        self.name = Property(str, id=2, uid=1002)
+        self.universe = Property(str, id=3, uid=1003)
+        self.ships = Property(dict, type=OBOXShip.Ship, id=4, uid=1004)
 
     def getIdentifier(self):
         return self.identifier

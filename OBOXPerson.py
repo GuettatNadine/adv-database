@@ -2,9 +2,9 @@ import persistent
 from objectbox.model import *
 
 @Entity(id=1, uid=1)
-class Person(persistent.Persistent):
+class Person:
     def __init__(self, identifier, name, age):
-        self.identifier = Property(id = 1, uid = 1001) 
+        self.identifier = Property(id = 1, uid = 1001)
         self.name = Property(name, id = 2, uid = 1002)
         self.age = Property(age, id = 3, uid = 1003)
 

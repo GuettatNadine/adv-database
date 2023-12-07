@@ -4,8 +4,8 @@ from objectbox.model import *
 @Entity(id=5, uid=5)
 class Ship:
     def __init__(self, serialNumber, affiliation):
-        self.serialNumber = Property(serialNumber, id = 1, uid 1010)
-        self.affiliation = Property(affiliation, id = 2, uid 1011)
+        self.serialNumber = Property(serialNumber, id = 1, uid = 1010)
+        self.affiliation = Property(affiliation, id = 2, uid = 1011)
         self.crew = persistent.mapping.PersistentMapping()
         self.modules = persistent.mapping.PersistentMapping()
         self.modules["weapon"] = persistent.mapping.PersistentMapping()
@@ -52,7 +52,7 @@ class MotherShip(Ship):
 class OtherShip(Ship):
     def __init__(self, serialNumber, affiliation, shipType):
         super().__init__(serialNumber, affiliation)
-        self.shipType = Property(shipType, id = 1, uid 1012)
+        self.shipType = Property(shipType, id = 1, uid = 1012)
 
     def getShipType(self):
         return self.shipType
