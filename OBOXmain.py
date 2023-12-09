@@ -174,23 +174,24 @@ def insertIntoShips(militaryCsv, civilianCsv, shieldCsv, energyCsv, weaponCsv, c
 
 
 def createOBOX(fileName):
-    # Configure ObjectBox: should be done only once in the whole program and the "ob" variable should be kept around
+    # Configure ObjectBox db 
     model = objectbox.Model()
-    model.entity(Person, last_property_id=objectbox.model.IdUid(3, 1003))
-    model.entity(MilitaryPerson, last_property_id=objectbox.model.IdUid(1, 1005))
-    model.entity(CivilianPerson, last_property_id=objectbox.model.IdUid(1, 1006))
+    model.entity(Person.Person, last_property_id=objectbox.model.IdUid(3, 1003))
+    model.entity(Person.MilitaryPerson, last_property_id=objectbox.model.IdUid(2, 2002))
+    model.entity(Person.CivilianPerson, last_property_id=objectbox.model.IdUid(1, 3001))
 
-    model.entity(Galaxy, last_property_id=objectbox.model.IdUid(3, 1009))
+    model.entity(Module.Module, last_property_id=objectbox.model.IdUid(6, 4006))
+    model.entity(Module.EnergyModule, last_property_id=objectbox.model.IdUid(2, 5002))
+    model.entity(Module.WeaponModule, last_property_id=objectbox.model.IdUid(2, 6002))
+    model.entity(Module.ShieldModule, last_property_id=objectbox.model.IdUid(1, 7001))
 
-    model.entity(Ship, last_property_id=objectbox.model.IdUid(2, 1011))
-    model.entity(MotherShip, last_property_id=objectbox.model.IdUid(2, 1011))
-    model.entity(OtherShip, last_property_id=objectbox.model.IdUid(1, 1012))
-    model.entity(TransportShip, last_property_id=objectbox.model.IdUid(2, 1011))
+    model.entity(Ship.Ship, last_property_id=objectbox.model.IdUid(7, 8007))
+    model.entity(Ship.MotherShip, last_property_id=objectbox.model.IdUid(1, 9001))
+    model.entity(Ship.OtherShip, last_property_id=objectbox.model.IdUid(1, 10001))
+    model.entity(Ship.TransportShip, last_property_id=objectbox.model.IdUid(1, 11001))
 
-    model.entity(Module, last_property_id=objectbox.model.IdUid(6, 1018))
-    model.entity(EnergyModule, last_property_id=objectbox.model.IdUid(2, 1020))
-    model.entity(WeaponModule, last_property_id=objectbox.model.IdUid(2, 1022))
-    model.entity(ShieldModule, last_property_id=objectbox.model.IdUid(1, 1023))
+    model.entity(Galaxy.Galaxy, last_property_id=objectbox.model.IdUid(3, 12003))
+
 
     model.last_entity_id = objectbox.model.IdUid(12, 12)
     db = objectbox.Builder().model(model).directory(fileName).build()

@@ -1,4 +1,5 @@
 from objectbox.model import *
+import OBOXPerson, OBOXModule
 
 @Entity(id=8, uid=8)
 class Ship:
@@ -52,7 +53,7 @@ class MotherShip(Ship):
 class OtherShip(Ship):
     def __init__(self, serialNumber, affiliation, shipType):
         super().__init__(serialNumber, affiliation)
-        self.shipType = Property(str, id = 7, uid = 10001)
+        self.shipType = Property(str, id = 1, uid = 10001)
 
     def getShipType(self):
         return self.shipType
@@ -64,7 +65,7 @@ class OtherShip(Ship):
 class TransportShip(Ship):
     def __init__(self, serialNumber, affiliation):
         super().__init__(serialNumber, affiliation)
-        self.cargo = Property(dict, type=str, id=4, uid=11001)
+        self.cargo = Property(dict, type=str, id=1, uid=11001)
 
     def getCargo(self):
         return list(self.cargo.keys())
