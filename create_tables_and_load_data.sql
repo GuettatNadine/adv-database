@@ -1,3 +1,11 @@
+DELETE FROM CargoItems;
+DELETE FROM CivilianPersons;
+DELETE FROM EnergyModules;
+DELETE FROM MilitaryPersons;
+DELETE FROM ShieldModules;
+DELETE FROM WeaponModules;
+DELETE FROM Ships;
+DELETE FROM Galaxies;
 -- Create Galaxies Table if not exists
 CREATE TABLE IF NOT EXISTS Galaxies (
     galaxy_id INT PRIMARY KEY,
@@ -87,25 +95,25 @@ CREATE TABLE IF NOT EXISTS WeaponModules (
 
 -- Load data from CSV files into respective tables using INSERT ... ON DUPLICATE KEY UPDATE
 COPY Galaxies
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\Galaxies10.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\Galaxies500.csv' HEADER CSV DELIMITER ',';
 
 COPY Ships
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\Ships10.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\Ships500.csv' HEADER CSV DELIMITER ',';
 
 COPY CargoItems
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\CargoItems10.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\CargoItems500.csv' HEADER CSV DELIMITER ',';
 
 COPY ShieldModules
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\ShieldModules10.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\ShieldModules500.csv' HEADER CSV DELIMITER ',';
 
 COPY MilitaryPersons
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\MilitaryPersons10.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\MilitaryPersons500.csv' HEADER CSV DELIMITER ',';
 
 COPY EnergyModules
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\EnergyModules10.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\EnergyModules500.csv' HEADER CSV DELIMITER ',';
 
 COPY CivilianPersons
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\CivilianPersons10.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\CivilianPersons500.csv' HEADER CSV DELIMITER ',';
 
 COPY WeaponModules
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\WeaponModules10.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\WeaponModules500.csv' HEADER CSV DELIMITER ',';

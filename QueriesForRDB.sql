@@ -30,3 +30,18 @@ WHERE ships.affiliation = 'caldari'
   AND energymodules.output < 80
 GROUP BY ships.ship_id,galaxies.galaxy_id
 HAVING COUNT(DISTINCT CASE WHEN militarypersons.specialization = 'engineer' THEN militarypersons.military_id END) >= 3;
+
+--Query 3
+/*
+Add an engineer on a mother ship
+*/
+INSERT INTO militarypersons (military_id, name, age, rank, specialization, ship_id)
+VALUES ((SELECT MAX(military_id) + 1 FROM militarypersons), 'Query McGuyer', 25, 3, 'engineer',122);
+
+--Query 4
+/*
+Delete the last added crew member
+*/
+DELETE FROM militarypersons
+WHERE military_id IN (SELECT MAX(military_id) FROM militarypersons);
+SELECT MAX(military_id) FROM militarypersons;

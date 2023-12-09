@@ -19,6 +19,7 @@ def insertGalaxy(csvFilePath, tree):
 
         # Iterate through each row in the CSV file
         for row in csvReader:
+            tree["galaxy_num"] = int(row["galaxy_id"])
             tree["galaxy"].insert(row["galaxy_id"], Galaxy.Galaxy(row["galaxy_id"], row["name"], row["universe"]))
             transaction.commit()  # Register the modification (transaction) into the database
     return tree
@@ -32,6 +33,7 @@ def insertShips(csvFilePath, dictShipObj, tree):
 
         # Iterate through each row in the CSV file
         for row in csvReader:
+            tree["ship_num"] = int(row["ship_id"])
             shipType = row["type"]
             # We create the ship
             if shipType == "mother":
@@ -66,7 +68,7 @@ def insertShips(csvFilePath, dictShipObj, tree):
     return tree
 
 
-def createMilitaryPerson(csvFilePath):
+def createMilitaryPerson(csvFilePath, tree):
     dictMilitary = {}
     # Open the CSV file
     with open(csvFilePath, 'r') as file:
@@ -75,14 +77,15 @@ def createMilitaryPerson(csvFilePath):
 
         # Iterate through each row in the CSV file
         for row in csvReader:
+            tree["military_num"] = int(row["military_id"])
             if row["ship_id"] not in dictMilitary.keys():
                 dictMilitary[row["ship_id"]] = []
             dictMilitary[row["ship_id"]].append(
                 Person.MilitaryPerson(row["military_id"], row["name"], row["age"], row["rank"], row["specialization"]))
-    return dictMilitary
+    return dictMilitary, tree
 
 
-def createCivilianPerson(csvFilePath):
+def createCivilianPerson(csvFilePath, tree):
     dictCivilian = {}
     # Open the CSV file
     with open(csvFilePath, 'r') as file:
@@ -91,14 +94,15 @@ def createCivilianPerson(csvFilePath):
 
         # Iterate through each row in the CSV file
         for row in csvReader:
+            tree["civilian_num"] = int(row["civilian_id"])
             if row["ship_id"] not in dictCivilian.keys():
                 dictCivilian[row["ship_id"]] = []
             dictCivilian[row["ship_id"]].append(
                 Person.CivilianPerson(row["civilian_id"], row["name"], row["age"], row["occupation"]))
-    return dictCivilian
+    return dictCivilian, tree
 
 
-def createCargo(csvFilePath):
+def createCargo(csvFilePath, tree):
     dictCargo = {}
     # Open the CSV file
     with open(csvFilePath, 'r') as file:
@@ -107,13 +111,14 @@ def createCargo(csvFilePath):
 
         # Iterate through each row in the CSV file
         for row in csvReader:
+            tree["item_num"] = int(row["item_id"])
             if row["ship_id"] not in dictCargo.keys():
                 dictCargo[row["ship_id"]] = []
             dictCargo[row["ship_id"]].append([row["item_id"], row["name"], row["quantity"]])
-    return dictCargo
+    return dictCargo, tree
 
 
-def createShieldModule(csvFilePath):
+def createShieldModule(csvFilePath, tree):
     dictShield = {}
     # Open the CSV file
     with open(csvFilePath, 'r') as file:
@@ -122,15 +127,16 @@ def createShieldModule(csvFilePath):
 
         # Iterate through each row in the CSV file
         for row in csvReader:
+            tree["module_num"] = int(row["module_id"])
             if row["ship_id"] not in dictShield.keys():
                 dictShield[row["ship_id"]] = []
             dictShield[row["ship_id"]].append(
                 Module.ShieldModule(row["module_id"], row["brand"], row["year"], row["model"], row["energy"],
                                     row["maxEnergy"], row["size"]))
-    return dictShield
+    return dictShield, tree
 
 
-def createEnergyModule(csvFilePath):
+def createEnergyModule(csvFilePath, tree):
     dictEnergy = {}
     # Open the CSV file
     with open(csvFilePath, 'r') as file:
@@ -139,15 +145,16 @@ def createEnergyModule(csvFilePath):
 
         # Iterate through each row in the CSV file
         for row in csvReader:
+            tree["module_num"] = int(row["module_id"])
             if row["ship_id"] not in dictEnergy.keys():
                 dictEnergy[row["ship_id"]] = []
             dictEnergy[row["ship_id"]].append(
                 Module.EnergyModule(row["module_id"], row["brand"], row["year"], row["model"], row["energy"],
                                     row["maxEnergy"], row["output"], row["recharge_rate"]))
-    return dictEnergy
+    return dictEnergy, tree
 
 
-def createWeaponModule(csvFilePath):
+def createWeaponModule(csvFilePath, tree):
     dictWeapon = {}
     # Open the CSV file
     with open(csvFilePath, 'r') as file:
@@ -156,26 +163,27 @@ def createWeaponModule(csvFilePath):
 
         # Iterate through each row in the CSV file
         for row in csvReader:
+            tree["module_num"] = int(row["module_id"])
             if row["ship_id"] not in dictWeapon.keys():
                 dictWeapon[row["ship_id"]] = []
             dictWeapon[row["ship_id"]].append(
                 Module.WeaponModule(row["module_id"], row["brand"], row["year"], row["model"], row["energy"],
                                     row["maxEnergy"], row["type"], row["caliber"]))
-    return dictWeapon
+    return dictWeapon, tree
 
 
-def insertIntoShips(militaryCsv, civilianCsv, shieldCsv, energyCsv, weaponCsv, cargoCsv):
+def insertIntoShips(militaryCsv, civilianCsv, shieldCsv, energyCsv, weaponCsv, cargoCsv, tree):
     """Create dict for the objects of a ship in order to add them easily"""
-    dictMilitary = createMilitaryPerson(militaryCsv)
-    dictCivilian = createCivilianPerson(civilianCsv)
-    dictShield = createShieldModule(shieldCsv)
-    dictEnergy = createEnergyModule(energyCsv)
-    dictWeapon = createWeaponModule(weaponCsv)
-    dictCargo = createCargo(cargoCsv)
+    dictMilitary, tree = createMilitaryPerson(militaryCsv, tree)
+    dictCivilian, tree = createCivilianPerson(civilianCsv, tree)
+    dictShield, tree = createShieldModule(shieldCsv, tree)
+    dictEnergy, tree = createEnergyModule(energyCsv, tree)
+    dictWeapon, tree = createWeaponModule(weaponCsv, tree)
+    dictCargo, tree = createCargo(cargoCsv, tree)
 
     dictShipObj = {"M": dictMilitary, "C": dictCivilian, "S": dictShield, "E": dictEnergy, "W": dictWeapon,
                    "CA": dictCargo}
-    return dictShipObj
+    return dictShipObj, tree
 
 
 def createZODB(fileName):
@@ -191,6 +199,9 @@ def main():
 
     # Start the database for the fist time and create the Objects from the CSV files
     if choice == "start":
+        # Record start time
+        start_time = time.time()
+
         # Creating the database
         db = createZODB("MyZopeOODB.fs")
 
@@ -205,14 +216,20 @@ def main():
         root = insertGalaxy("Galaxies500.csv", root)
 
         # Creating the Objects composing a ship
-        dictShipObj = insertIntoShips("MilitaryPersons500.csv", "CivilianPersons500.csv", "ShieldModules500.csv",
-                                      "EnergyModules500.csv", "WeaponModules500.csv", "CargoItems500.csv")
+        dictShipObj, root = insertIntoShips("MilitaryPersons500.csv", "CivilianPersons500.csv", "ShieldModules500.csv",
+                                            "EnergyModules500.csv", "WeaponModules500.csv", "CargoItems500.csv", root)
 
         # Creating ships and adding modules and persons in them and inserting the ships in the database
         root = insertShips("Ships500.csv", dictShipObj, root)
 
         # Close the connection to the database
         connection.close()
+
+        # Record end time
+        end_time = time.time()
+        # Calculate elapsed time
+        elapsed_seconds = end_time - start_time
+        print(f"Elapsed time for the creation of the database: {elapsed_seconds:.6f} seconds\n")
 
     # Load the objects from the Zope object Database
     if choice == "load":
@@ -225,7 +242,7 @@ def main():
         root = connection.root()
 
         # Queries :
-        """First Query : """
+        """First Query Select : """
         count = 0
         affiliation = str("khanid kingdom")
         found = False
@@ -251,13 +268,13 @@ def main():
         end_time = time.time()
         # Calculate elapsed time
         elapsed_seconds = end_time - start_time
-        print(count)
-        print(f"Elapsed time for the first query: {elapsed_seconds:.6f} seconds")
+        print("number of results found : ", count)
+        print(f"Elapsed time for the first query: {elapsed_seconds:.6f} seconds\n")
 
-        """Second Query : """
-        # Record start time
+        """Second Query Select : """
         count = 0
         engCounter = 0
+        # Record start time
         start_time = time.time()
         affiliation = str("caldari")
         for g in root["galaxy"]:
@@ -303,9 +320,60 @@ def main():
 
         # Calculate elapsed time
         elapsed_seconds = end_time - start_time
-        print(count)
-        print(result)
-        print(f"Elapsed time for the second query: {elapsed_seconds:.6f} seconds")
+        print("number of results found : ", count)
+        print("results found : ")
+        print("id   |   ship type   |   location")
+        for res in result:
+            print(res[0], "     ", res[1], "     ", res[2])
+        print(f"Elapsed time for the second query: {elapsed_seconds:.6f} seconds\n")
+
+        """Third Query Add : """
+
+        for ship in root["galaxy"].get(str(0)).getShips(affiliation):  # print last crew member added
+            if ship.getSerialNumber() == result[0][0]:
+                print("last crew member added before insert : ", ship.getCrew()[-1], "\n")
+                break
+
+        # Record start time
+        start_time = time.time()
+        for ship in root["galaxy"].get(str(0)).getShips(affiliation):
+            if ship.getSerialNumber() == result[0][0]:
+                root["military_num"] += 1
+                tempMilitaryPerson = Person.MilitaryPerson(root["military_num"], "Query McGuyer", 25, 3, "engineer")
+                ship.addCrew([tempMilitaryPerson])
+                break
+        transaction.commit()  # Register the modification (transaction) into the database
+        # Record end time
+        end_time = time.time()
+        print(f"Elapsed time for the third query: {elapsed_seconds:.6f} seconds\n")
+        # Calculate elapsed time
+        elapsed_seconds = end_time - start_time
+
+        for ship in root["galaxy"].get(str(0)).getShips(affiliation):  # print last crew member added
+            if ship.getSerialNumber() == result[0][0]:
+                print("last crew member added after insert : ", ship.getCrew()[-1], "\n")
+                break
+
+        """Fourth Query Delete : """
+        # Record start time
+        start_time = time.time()
+        for ship in root["galaxy"].get(str(0)).getShips(affiliation):
+            if ship.getSerialNumber() == result[0][0]:
+                del ship.crew[root["military_num"]]
+                break
+        transaction.commit()  # Register the modification (transaction) into the database
+        # Record end time
+        end_time = time.time()
+
+        # Calculate elapsed time
+        elapsed_seconds = end_time - start_time
+        print(f"Elapsed time for the fourth query: {elapsed_seconds:.6f} seconds\n")
+
+        for ship in root["galaxy"].get(str(0)).getShips(affiliation):  # print last crew member added
+            if ship.getSerialNumber() == result[0][0]:
+                print("last crew member added : ", ship.getCrew()[-1], "\n")
+                break
+
         # Close the connection to the database
         connection.close()
     return 0
