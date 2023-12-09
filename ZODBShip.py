@@ -4,7 +4,7 @@ import persistent.mapping
 
 class Ship(persistent.Persistent):
     def __init__(self, serialNumber, affiliation):
-        self.serialNumber = serialNumber
+        self.serialNumber = int(serialNumber)
         self.affiliation = affiliation
         self.crew = persistent.mapping.PersistentMapping()
         self.modules = persistent.mapping.PersistentMapping()
@@ -78,9 +78,9 @@ class TransportShip(Ship):
     def addCargo(self, itemType, number):  # Add cargo item by name
         if not (itemType in self.cargo.keys()):
             self.cargo[itemType] = 0
-        self.cargo[itemType] += number
+        self.cargo[itemType] += int(number)
 
     def removeCargo(self, itemType, number):  # Remove Cargo Item by name and only removes the input value
-        self.cargo[itemType] -= number
+        self.cargo[itemType] -= int(number)
         if self.cargo[itemType] < 0:  # the min is an empty cargo
             self.cargo[itemType] = 0

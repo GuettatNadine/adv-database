@@ -160,7 +160,7 @@ def createWeaponModule(csvFilePath):
                 dictWeapon[row["ship_id"]] = []
             dictWeapon[row["ship_id"]].append(
                 Module.WeaponModule(row["module_id"], row["brand"], row["year"], row["model"], row["energy"],
-                                    row["maxEnergy"], row["type"], int(row["caliber"])))
+                                    row["maxEnergy"], row["type"], row["caliber"]))
     return dictWeapon
 
 
@@ -202,14 +202,14 @@ def main():
         root['galaxy'] = BTrees.OOBTree.BTree()
 
         # Creating and inserting the galaxies into the database from the CSV file
-        root = insertGalaxy("Galaxies10.csv", root)
+        root = insertGalaxy("Galaxies500.csv", root)
 
         # Creating the Objects composing a ship
-        dictShipObj = insertIntoShips("MilitaryPersons10.csv", "CivilianPersons10.csv", "ShieldModules10.csv",
-                                      "EnergyModules10.csv", "WeaponModules10.csv", "CargoItems10.csv")
+        dictShipObj = insertIntoShips("MilitaryPersons500.csv", "CivilianPersons500.csv", "ShieldModules500.csv",
+                                      "EnergyModules500.csv", "WeaponModules500.csv", "CargoItems500.csv")
 
         # Creating ships and adding modules and persons in them and inserting the ships in the database
-        root = insertShips("Ships10.csv", dictShipObj, root)
+        root = insertShips("Ships500.csv", dictShipObj, root)
 
         # Close the connection to the database
         connection.close()
@@ -229,23 +229,26 @@ def main():
         count = 0
         affiliation = str("khanid kingdom")
         found = False
+        result = []
         # Record start time
         start_time = time.time()
         for g in root["galaxy"]:
             if affiliation in root["galaxy"].get(g).ships.keys():
                 for ship in root["galaxy"].get(g).getShips(affiliation):
                     for member in ship.getCrew():
+                        if type(member) == Person.CivilianPerson:
+                            break
                         if member.getSpecialization() == "weapons":
                             found = True
                             break
                     if found:
+                        found = False
                         for weapon in ship.getModules("weapon"):
                             if weapon.getCaliber() >= 3:
                                 count += 1
                                 break
         # Record end time
         end_time = time.time()
-
         # Calculate elapsed time
         elapsed_seconds = end_time - start_time
         print(count)
@@ -262,6 +265,8 @@ def main():
                 for ship in root["galaxy"].get(g).getShips(affiliation):
                     found = 0
                     for member in ship.getCrew():
+                        if type(member) == Person.CivilianPerson:
+                            break
                         if member.getSpecialization() == "engineer":
                             found = 1
                             engCounter += 1
@@ -284,6 +289,13 @@ def main():
                                     found = 4
                                     break
                     if found == 4:
+                        if type(ship) == Ship.MotherShip:
+                            tempType = "mother"
+                        elif type(ship) == Ship.TransportShip:
+                            tempType = "transport"
+                        else:
+                            tempType = ship.getShipType()
+                        result.append([ship.getSerialNumber(), tempType, root["galaxy"].get(g).getName()])
                         count += 1
 
         # Record end time
@@ -292,6 +304,7 @@ def main():
         # Calculate elapsed time
         elapsed_seconds = end_time - start_time
         print(count)
+        print(result)
         print(f"Elapsed time for the second query: {elapsed_seconds:.6f} seconds")
         # Close the connection to the database
         connection.close()

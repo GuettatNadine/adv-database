@@ -3,12 +3,12 @@ import persistent
 
 class Module(persistent.Persistent):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy):
-        self.serialNumber = serialNumber
+        self.serialNumber = int(serialNumber)
         self.brand = brand
-        self.year = year
+        self.year = int(year)
         self.model = model
-        self.energy = energy
-        self.maxEnergy = maxEnergy
+        self.energy = int(energy)
+        self.maxEnergy = int(maxEnergy)
 
     def getSerialNumber(self):
         return self.serialNumber
@@ -35,8 +35,8 @@ class Module(persistent.Persistent):
 class EnergyModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, output, rechargeRate):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.output = output
-        self.rechargeRate = rechargeRate
+        self.output = int(output)
+        self.rechargeRate = float(rechargeRate)
 
     def getOutput(self):
         return self.output
@@ -55,7 +55,7 @@ class WeaponModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, weaponType, caliber):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
         self.weaponType = weaponType
-        self.caliber = caliber
+        self.caliber = int(caliber)
 
     def getType(self):
         return self.weaponType
@@ -67,7 +67,7 @@ class WeaponModule(Module):
 class ShieldModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, size):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.size = size
+        self.size = int(size)
 
     def getSize(self):
         return self.size

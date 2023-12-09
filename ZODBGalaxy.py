@@ -4,7 +4,7 @@ import persistent.mapping
 
 class Galaxy(persistent.Persistent):
     def __init__(self, identifier, name, universe):
-        self.identifier = identifier
+        self.identifier = int(identifier)
         self.name = name
         self.universe = universe
         self.ships = persistent.mapping.PersistentMapping()

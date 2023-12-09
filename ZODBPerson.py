@@ -3,9 +3,9 @@ import persistent
 
 class Person(persistent.Persistent):
     def __init__(self, identifier, name, age):
-        self.identifier = identifier
+        self.identifier = int(identifier)
         self.name = name
-        self.age = age
+        self.age = int(age)
 
     def __str__(self):  # Print
         return f"{self.identifier} {self.name} {self.age}"
@@ -29,7 +29,7 @@ class Person(persistent.Persistent):
 class MilitaryPerson(Person):
     def __init__(self, identifier, name, age, rank, specialization):
         super().__init__(identifier, name, age)
-        self.rank = rank
+        self.rank = int(rank)
         self.specialization = specialization
 
     def __str__(self):  # Print
