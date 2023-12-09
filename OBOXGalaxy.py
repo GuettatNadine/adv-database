@@ -4,13 +4,13 @@ from objectbox.model import *
 import OBOXShip
 
 
-@Entity(id=1, uid=1)
+@Entity(id=4, uid=4)
 class Galaxy:
     def __init__(self, identifier, name, universe):
-        self.identifier = Property(id=1, uid=1001)
-        self.name = Property(str, id=2, uid=1002)
-        self.universe = Property(str, id=3, uid=1003)
-        self.ships = Property(dict, type=OBOXShip.Ship, id=4, uid=1004)
+        self.identifier = Property(id=1, uid=4001)
+        self.name = Property(str, id=2, uid=4002)
+        self.universe = Property(str, id=3, uid=4003)
+        self.ships = Property(dict, type=OBOXShip.Ship, id=4, uid=4004)
 
     def getIdentifier(self):
         return self.identifier

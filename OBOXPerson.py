@@ -5,8 +5,8 @@ from objectbox.model import *
 class Person:
     def __init__(self, identifier, name, age):
         self.identifier = Property(id = 1, uid = 1001)
-        self.name = Property(name, id = 2, uid = 1002)
-        self.age = Property(age, id = 3, uid = 1003)
+        self.name = Property(str, id = 2, uid = 1002)
+        self.age = Property(int, id = 3, uid = 1003)
 
     def __str__(self):  # Print
         return f"{self.identifier} {self.name} {self.age}"
@@ -30,8 +30,8 @@ class Person:
 class MilitaryPerson(Person):
     def __init__(self, identifier, name, age, rank, specialization):
         super().__init__(identifier, name, age)
-        self.rank = Property(rank, id = 1, uid = 1004)
-        self.specialization = Property(specialization, id = 1, uid = 1005)
+        self.rank = Property(int, id = 1, uid = 2001)
+        self.specialization = Property(str, id = 1, uid = 2002)
 
     def __str__(self):  # Print
         base_class = super().__str__()
@@ -53,7 +53,7 @@ class MilitaryPerson(Person):
 class CivilianPerson(Person):
     def __init__(self, identifier, name, age, occupation):
         super().__init__(identifier, name, age)
-        self.occupation = Property(occupation, id = 1,   uid = 1006)
+        self.occupation = Property(str, id = 1,   uid = 3001)
 
     def __str__(self):  # Print
         base_class = super().__str__()

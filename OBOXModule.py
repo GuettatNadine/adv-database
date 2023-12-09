@@ -5,12 +5,12 @@ from objectbox.model import *
 @Entity(id=9, uid=9)
 class Module:
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy):
-        self.serialNumber = Property(serialNumber, id=1, uid=1013)
-        self.brand = Property(brand, id=2, uid=1014)
-        self.year = Property(year, id=3, uid=1015)
-        self.model = Property(model, id=4, uid=1016)
-        self.energy = Property(energy, id=5, uid=1017)
-        self.maxEnergy = Property(maxEnergy, id=6, uid=1018)
+        self.serialNumber = Property(int, id=1, uid=9001)
+        self.brand = Property(str, id=2, uid=9002)
+        self.year = Property(int, id=3, uid=9003)
+        self.model = Property(str, id=4, uid=9004)
+        self.energy = Property(int, id=5, uid=9005)
+        self.maxEnergy = Property(int, id=6, uid=9006)
 
     def getSerialNumber(self):
         return self.serialNumber
@@ -38,8 +38,8 @@ class Module:
 class EnergyModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, output, rechargeRate):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.output = Property(output, id=1, uid=1019)
-        self.rechargeRate = Property(rechargeRate, id=2, uid=1020)
+        self.output = Property(int, id=1, uid=10001)
+        self.rechargeRate = Property(int, id=2, uid=10002)
 
     def getOutput(self):
         return self.output
@@ -58,8 +58,8 @@ class EnergyModule(Module):
 class WeaponModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, weaponType, caliber):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.weaponType = Property(weaponType, id=1, uid=1021)
-        self.caliber = Property(caliber, id=2, uid=1022)
+        self.weaponType = Property(str, id=1, uid=1101)
+        self.caliber = Property(int, id=2, uid=1102)
 
     def getType(self):
         return self.weaponType
@@ -72,7 +72,7 @@ class WeaponModule(Module):
 class ShieldModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, size):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.size = Property(int, id=1, uid=1023)
+        self.size = Property(int, id=1, uid=1201)
 
     def getSize(self):
         return self.size
