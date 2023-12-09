@@ -1,4 +1,5 @@
 import objectbox
+import BTrees.OOBTree
 
 import OBOXGalaxy as Galaxy
 import OBOXShip as Ship
@@ -206,9 +207,10 @@ def main():
     # Start the database for the fist time and create the Objects from the CSV files
     if choice == "start":
         # Creating the database
-        db = createOBOX("MyOboxOODB.fs")
+        db = createOBOX("MyOboxOODB")
 
         # Connecting to the database
+        # box = objectbox.Box(ob, Galaxy.Galaxy)
         connection = db.open()
         root = connection.root()
 
@@ -232,7 +234,7 @@ def main():
     if choice == "load":
         # Load the database
         model = objectbox.Model()
-        db = objectbox.Builder().model(model).directory("MyOBoxOODB.fs").build()
+        db = objectbox.Builder().model(model).directory("MyOboxOODB").build()
 
         # Start a connection
         connection = db.open()
