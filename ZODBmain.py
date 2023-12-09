@@ -8,6 +8,7 @@ import ZODBShip as Ship
 import ZODBModule as Module
 import ZODBPerson as Person
 import csv
+import time
 
 
 def insertGalaxy(csvFilePath, tree):
@@ -159,7 +160,7 @@ def createWeaponModule(csvFilePath):
                 dictWeapon[row["ship_id"]] = []
             dictWeapon[row["ship_id"]].append(
                 Module.WeaponModule(row["module_id"], row["brand"], row["year"], row["model"], row["energy"],
-                                    row["maxEnergy"], row["type"], row["caliber"]))
+                                    row["maxEnergy"], row["type"], int(row["caliber"])))
     return dictWeapon
 
 
@@ -224,15 +225,74 @@ def main():
         root = connection.root()
 
         # Queries :
-        for member in root["galaxy"].get("0").getShips("khanid kingdom")[0].getCrew():
-            print("crew member : ", end="")
-            print(member)
-        """
-        for member in root["galaxy"].get("0").getShips("khanid kingdom")[0].getPassengers():
-            print("passenger : ", end="")
-            print(member)
-        """
+        """First Query : """
+        count = 0
+        affiliation = str("khanid kingdom")
+        found = False
+        # Record start time
+        start_time = time.time()
+        for g in root["galaxy"]:
+            if affiliation in root["galaxy"].get(g).ships.keys():
+                for ship in root["galaxy"].get(g).getShips(affiliation):
+                    for member in ship.getCrew():
+                        if member.getSpecialization() == "weapons":
+                            found = True
+                            break
+                    if found:
+                        for weapon in ship.getModules("weapon"):
+                            if weapon.getCaliber() >= 3:
+                                count += 1
+                                break
+        # Record end time
+        end_time = time.time()
 
+        # Calculate elapsed time
+        elapsed_seconds = end_time - start_time
+        print(count)
+        print(f"Elapsed time for the first query: {elapsed_seconds:.6f} seconds")
+
+        """Second Query : """
+        # Record start time
+        count = 0
+        engCounter = 0
+        start_time = time.time()
+        affiliation = str("caldari")
+        for g in root["galaxy"]:
+            if affiliation in root["galaxy"].get(g).ships.keys():
+                for ship in root["galaxy"].get(g).getShips(affiliation):
+                    found = 0
+                    for member in ship.getCrew():
+                        if member.getSpecialization() == "engineer":
+                            found = 1
+                            engCounter += 1
+                            if engCounter >= 3:
+                                break
+                    if found == 1 and engCounter >= 3:
+                        engCounter = 0
+                        for weapon in ship.getModules("weapon"):
+                            if weapon.getCaliber() >= 2:
+                                found = 2
+                                break
+                        if found == 2:
+                            for shield in ship.getModules("shield"):
+                                if shield.getSize() >= 2:
+                                    found = 3
+                                    break
+                        if found == 3:
+                            for energy in ship.getModules("energy"):
+                                if energy.getOutput() < 80:
+                                    found = 4
+                                    break
+                    if found == 4:
+                        count += 1
+
+        # Record end time
+        end_time = time.time()
+
+        # Calculate elapsed time
+        elapsed_seconds = end_time - start_time
+        print(count)
+        print(f"Elapsed time for the second query: {elapsed_seconds:.6f} seconds")
         # Close the connection to the database
         connection.close()
     return 0
