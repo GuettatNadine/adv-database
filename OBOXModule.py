@@ -1,16 +1,14 @@
-import persistent
 from objectbox.model import *
 
-
-@Entity(id=9, uid=9)
+@Entity(id=4, uid=4)
 class Module:
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy):
-        self.serialNumber = Property(int, id=1, uid=9001)
-        self.brand = Property(str, id=2, uid=9002)
-        self.year = Property(int, id=3, uid=9003)
-        self.model = Property(str, id=4, uid=9004)
-        self.energy = Property(int, id=5, uid=9005)
-        self.maxEnergy = Property(int, id=6, uid=9006)
+        self.serialNumber = Property(int, id=1, uid=4001)
+        self.brand = Property(str, id=2, uid=4002)
+        self.year = Property(int, id=3, uid=4003)
+        self.model = Property(str, id=4, uid=4004)
+        self.energy = Property(int, id=5, uid=4005)
+        self.maxEnergy = Property(int, id=6, uid=4006)
 
     def getSerialNumber(self):
         return self.serialNumber
@@ -34,12 +32,12 @@ class Module:
         self.energy = energy
 
 
-@Entity(id=10, uid=10)
+@Entity(id=5, uid=5)
 class EnergyModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, output, rechargeRate):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.output = Property(int, id=1, uid=10001)
-        self.rechargeRate = Property(int, id=2, uid=10002)
+        self.output = Property(int, id=1, uid=5001)
+        self.rechargeRate = Property(int, id=2, uid=5002)
 
     def getOutput(self):
         return self.output
@@ -54,12 +52,12 @@ class EnergyModule(Module):
         self.rechargeRate = rechargeRate
 
 
-@Entity(id=11, uid=11)
+@Entity(id=6, uid=6)
 class WeaponModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, weaponType, caliber):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.weaponType = Property(str, id=1, uid=1101)
-        self.caliber = Property(int, id=2, uid=1102)
+        self.weaponType = Property(str, id=1, uid=6001)
+        self.caliber = Property(int, id=2, uid=6002)
 
     def getType(self):
         return self.weaponType
@@ -68,11 +66,11 @@ class WeaponModule(Module):
         return self.caliber
 
 
-@Entity(id=12, uid=12)
+@Entity(id=7, uid=7)
 class ShieldModule(Module):
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, size):
         super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.size = Property(int, id=1, uid=1201)
+        self.size = Property(int, id=1, uid=7001)
 
     def getSize(self):
         return self.size

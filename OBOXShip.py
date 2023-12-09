@@ -1,16 +1,16 @@
 from objectbox.model import *
 
-@Entity(id=5, uid=5)
+@Entity(id=8, uid=8)
 class Ship:
     def __init__(self, serialNumber, affiliation):
-        self.serialNumber = Property(int, id = 1, uid = 5001)
-        self.affiliation = Property(str, id = 2, uid = 5002)
+        self.serialNumber = Property(int, id = 1, uid = 8001)
+        self.affiliation = Property(str, id = 2, uid = 8002)
         # persistant 
-        self.crew = persistent.mapping.PersistentMapping()
-        self.modules = persistent.mapping.PersistentMapping()
-        self.modules["weapon"] = persistent.mapping.PersistentMapping()
-        self.modules["energy"] = persistent.mapping.PersistentMapping()
-        self.modules["shield"] = persistent.mapping.PersistentMapping()
+        self.crew = Property(dict, type=OBOXPerson.Person, id=3, uid=8003)
+        self.modules = Property(dict, type=OBOXModule.Module, id=4, uid=8004)
+        self.modules["weapon"] = Property(dict, type=OBOXModule.WeaponModule, id=5, uid=8005)
+        self.modules["energy"] = Property(dict, type=OBOXModule.EnergyModule, id=6, uid=8006)
+        self.modules["shield"] = Property(dict, type=OBOXModule.ShieldModule, id=7, uid=8007)
 
     def getSerialNumber(self):
         return self.serialNumber
@@ -35,13 +35,12 @@ class Ship:
         for module in modules:
             self.modules[moduleType][module.getSerialNumber()] = module
 
-@Entity(id=6, uid=6)
+@Entity(id=9, uid=9)
 class MotherShip(Ship):
     def __init__(self, serialNumber, affiliation):
         super().__init__(serialNumber, affiliation)
         # persistant
-        self.passengers = persistent.mapping.PersistentMapping()
-
+        self.passengers = Property(dict, type=OBOXPerson.Person, id=1, uid=9001)
     def getPassengers(self):
         return list(self.passengers.values())
 
@@ -49,11 +48,11 @@ class MotherShip(Ship):
         for member in passengers:
             self.passengers[member.getIdentifier()] = member
 
-@Entity(id=7, uid=7)
+@Entity(id=10, uid=10)
 class OtherShip(Ship):
     def __init__(self, serialNumber, affiliation, shipType):
         super().__init__(serialNumber, affiliation)
-        self.shipType = Property(str, id = 7, uid = 7001)
+        self.shipType = Property(str, id = 7, uid = 10001)
 
     def getShipType(self):
         return self.shipType
@@ -61,12 +60,11 @@ class OtherShip(Ship):
     def setShipType(self, shipType):
         self.shipType = shipType
 
-@Entity(id=8, uid=8)
+@Entity(id=11, uid=11)
 class TransportShip(Ship):
     def __init__(self, serialNumber, affiliation):
         super().__init__(serialNumber, affiliation)
-        # persistant
-        self.cargo = persistent.mapping.PersistentMapping()
+        self.cargo = Property(dict, type=str, id=4, uid=11001)
 
     def getCargo(self):
         return list(self.cargo.keys())
