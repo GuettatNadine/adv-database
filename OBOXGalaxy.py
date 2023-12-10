@@ -1,7 +1,7 @@
 from objectbox.model import *
 import OBOXShip
 
-
+print("__________________BEG")
 @Entity(id=12, uid=12)
 class Galaxy:
     identifier = Id(id=1, uid=12001)
@@ -15,6 +15,7 @@ class Galaxy:
         self.name = name
         self.universe = universe
         self.ships = {}
+        print("__________________HERE")
         
     def getIdentifier(self):
         return self.identifier
@@ -28,8 +29,9 @@ class Galaxy:
     def addShip(self, ship):  # Add a ship based on it's affiliation
         affiliation = ship.getAffiliation()
         if not (affiliation in self.ships.keys()):  # If the affiliation is new create a new persistent Map
-            self.ships[affiliation] = Property(dict, type=PropertyType.long, id=4, uid=4004) # ???
+            self.ships[affiliation] = {ship}
         self.ships[affiliation][ship.getSerialNumber()] = ship
 
     def getShips(self, affiliation):
         return list(self.ships[affiliation].values())
+print("__________________END")

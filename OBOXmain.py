@@ -20,13 +20,11 @@ def insertGalaxy(csvFilePath, box):
         # Iterate through each row in the CSV file
         for row in csvReader:
             # Create a Galaxy object
-            galaxy = Galaxy.Galaxy(row["galaxy_id"], row["name"], row["universe"])
-
-            # Check if 'box' is valid before putting the object
-            if box is not None:
-                box.put(galaxy)
-            else:
-                print("Error: 'box' is None. Skipping Galaxy insertion.")
+            galaxy = Galaxy.Galaxy(int(row["galaxy_id"]), row["name"], row["universe"])
+            print("BEFORE__________________")
+            print(type(galaxy))
+            box.put(galaxy)
+            print("AFTER__________________")
 
 def insertShips(csvFilePath, dictShipObj, box):
     # Open the CSV file
@@ -202,7 +200,43 @@ def createWeaponModule(csvFilePath):
     return dictWeapon
 
 
-def insertIntoShips(militaryCsv, civilianCsv, shieldCsv, energyCsv, weaponCsv, cargoCsv, box):
+
+# ___________________
+
+def create_boxes(db):
+    # Create boxes for different entity types
+    galaxies_box = objectbox.Box(db, Galaxy.Galaxy)
+    persons_box = objectbox.Box(db, Person.Person)
+    military_persons_box = objectbox.Box(db, Person.MilitaryPerson)
+    civilian_persons_box = objectbox.Box(db, Person.CivilianPerson)
+    modules_box = objectbox.Box(db, Module.Module)
+    energy_modules_box = objectbox.Box(db, Module.EnergyModule)
+    weapon_modules_box = objectbox.Box(db, Module.WeaponModule)
+    shield_modules_box = objectbox.Box(db, Module.ShieldModule)
+    ships_box = objectbox.Box(db, Ship.Ship)
+    mother_ships_box = objectbox.Box(db, Ship.MotherShip)
+    other_ships_box = objectbox.Box(db, Ship.OtherShip)
+    transport_ships_box = objectbox.Box(db, Ship.TransportShip)
+
+    return {
+        'galaxies': galaxies_box,
+        'persons': persons_box,
+        'military_persons': military_persons_box,
+        'civilian_persons': civilian_persons_box,
+        'modules': modules_box,
+        'energy_modules': energy_modules_box,
+        'weapon_modules': weapon_modules_box,
+        'shield_modules': shield_modules_box,
+        'ships': ships_box,
+        'mother_ships': mother_ships_box,
+        'other_ships': other_ships_box,
+        'transport_ships': transport_ships_box,
+    }
+# ___________________
+
+
+def insertIntoShips(militaryCsv, civilianCsv, shieldCsv, energyCsv, weaponCsv, cargoCsv, db):
+    myBox = create_boxes(db)
     # Create dict for the objects of a ship in order to add them easily
     dictMilitary = createMilitaryPerson(militaryCsv)
     dictCivilian = createCivilianPerson(civilianCsv)
@@ -210,17 +244,20 @@ def insertIntoShips(militaryCsv, civilianCsv, shieldCsv, energyCsv, weaponCsv, c
     dictEnergy = createEnergyModule(energyCsv)
     dictWeapon = createWeaponModule(weaponCsv)
     dictCargo = createCargo(cargoCsv)
-
+    
     dictShipObj = {"M": dictMilitary, "C": dictCivilian, "S": dictShield, "E": dictEnergy, "W": dictWeapon,
                    "CA": dictCargo}
 
-    # Insert galaxies into ObjectBox database
-    insertGalaxy("Galaxies10.csv", box)
+    # Obtain the box object from the db instance
+    with db.write_tx():
+        # Insert galaxies into ObjectBox database
+        insertGalaxy("Galaxies10.csv", myBox['galaxies'])
 
-    # Insert ships into ObjectBox database
-    insertShips("Ships10.csv", dictShipObj, box)
-
-
+        # Insert ships into ObjectBox database
+        insertShips("Ships10.csv", dictShipObj, myBox['ships'])
+        print("Ships inserted successfully!")
+        
+            
 def createOBOX(fileName):
     try:
         # Configure ObjectBox db
@@ -264,21 +301,23 @@ def createOBOX(fileName):
         
         return None
 def main():
+    # Prompt the user for input
     choice = input("\"start\" to create the db and inserting an object\n"
                    "\"load\" to load the database and see the object\nInput : ")
 
+    # If the user chooses to start
     if choice == "start":
-        # Creating the database
+        # Create ObjectBox database
         db = createOBOX("MyOboxOODB")
 
         # Check if the database creation was successful
         if db is not None:
-            # Connecting to the database
-            with db.write_tx() as box:  # Use write_tx() for write transactions
-                # Creating and inserting the galaxies into the database from the CSV file
-                insertIntoShips("MilitaryPersons10.csv", "CivilianPersons10.csv", "ShieldModules10.csv",
-                                "EnergyModules10.csv", "WeaponModules10.csv", "CargoItems10.csv", box)
+            # Insert ships into the database
+            insertIntoShips("MilitaryPersons10.csv", "CivilianPersons10.csv", "ShieldModules10.csv",
+                            "EnergyModules10.csv", "WeaponModules10.csv", "CargoItems10.csv", db)
+            print("Ships inserted successfully!")
 
+    # If the user chooses to load
     if choice == "load":
         # Load the database
         model = objectbox.Model()
@@ -287,11 +326,13 @@ def main():
         # Check if the database load was successful
         if db is not None:
             # Start a connection
-            with db.read_tx() as box:  # Use read_tx() for read transactions
+            with db.read_tx() as box:
                 # Queries:
                 for member in box.get(0).getShips("khanid kingdom")[0].getCrew():
                     print("crew member: ", end="")
                     print(member)
+
     return 0
 
+# Run the main function
 main()
