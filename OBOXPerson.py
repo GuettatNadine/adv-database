@@ -35,8 +35,11 @@ class MilitaryPerson():
     rank = Property(int, id = 4, uid = 2004)
     specialization = Property(str, id = 5, uid = 2005)        
     
-    def __init__(self, string: str = ""):
+    def __init__(self, identifier, name, age, rank, specialization, string: str = ""):
         self.str = string
+        identifier = self.identifier
+        name = self.name
+        age = self.age
     
     def __str__(self):  # Print
         base_class = super().__str__()
@@ -61,8 +64,12 @@ class CivilianPerson():
     age = Property(int, id = 3, uid = 3003)
     occupation = Property(str, id = 4,   uid = 3004)
     
-    def __init__(self, string: str = ""):
+    def __init__(self, identifier, name, age, occupation, string: str = ""):
         self.str = string
+        identifier = self.identifier
+        name = self.name
+        age = self.age
+        occupation = self.occupation
 
     def __str__(self):  # Print
         base_class = super().__str__()

@@ -231,9 +231,9 @@ def createOBOX(fileName):
     model.entity(Ship.Ship, last_property_id=objectbox.model.IdUid(4, 8004))
     model.entity(Ship.MotherShip, last_property_id=objectbox.model.IdUid(5, 9005))
     model.entity(Ship.OtherShip, last_property_id=objectbox.model.IdUid(4, 10004))
-    model.entity(Ship.TransportShip, last_property_id=objectbox.model.IdUid(4, 11004))
+    model.entity(Ship.TransportShip, last_property_id=objectbox.model.IdUid(5, 11005))
 
-    model.entity(Galaxy.Galaxy, last_property_id=objectbox.model.IdUid(3, 12003))
+    model.entity(Galaxy.Galaxy, last_property_id=objectbox.model.IdUid(4, 12004))
 
     model.last_entity_id = objectbox.model.IdUid(12, 12)
     db = objectbox.Builder().model(model).directory(fileName).build()
@@ -251,8 +251,8 @@ def main():
         # Connecting to the database
         with db.write_tx() as box:  # Use write_tx() for write transactions
             # Creating and inserting the galaxies into the database from the CSV file
-            insertIntoShips("MilitaryPersons100.csv", "CivilianPersons100.csv", "ShieldModules100.csv",
-                            "EnergyModules100.csv", "WeaponModules100.csv", "CargoItems100.csv", box)
+            insertIntoShips("MilitaryPersons10.csv", "CivilianPersons10.csv", "ShieldModules10.csv",
+                            "EnergyModules10.csv", "WeaponModules10.csv", "CargoItems10.csv", box)
 
     if choice == "load":
         # Load the database

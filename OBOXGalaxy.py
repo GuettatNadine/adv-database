@@ -8,9 +8,13 @@ class Galaxy:
     name = Property(str, id=2, uid=12002)
     universe = Property(str, id=3, uid=12003)
     ships = Property(dict, type=PropertyType.long, id=4, uid=12004)
-        
-    def __init__(self, string: str = ""):
+
+    def __init__(self, identifier, name, universe, string: str = ""):
         self.str = string
+        identifier = self.identifier
+        name = self.name
+        universe = self.universe
+        ships = {}
         
     def getIdentifier(self):
         return self.identifier

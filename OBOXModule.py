@@ -9,8 +9,14 @@ class Module:
     energy = Property(int, id=5, uid=4005)
     maxEnergy = Property(int, id=6, uid=4006)
     
-    def __init__(self, string: str = ""):
+    def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, string: str = ""):
         self.str = string
+        serialNumber = self.serialNumber
+        brand = self.brand
+        year = self.year
+        model = self.model
+        energy = self.energy
+        maxEnergy = self.maxEnergy
     
     def getSerialNumber(self):
         return self.serialNumber
@@ -44,8 +50,16 @@ class EnergyModule:
     output = Property(int, id=7, uid=5007)
     rechargeRate = Property(int, id=8, uid=5008)
 
-    def __init__(self, string: str = ""):
+    def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, output, rechargeRate, string: str = ""):
         self.str = string
+        serialNumber = self.serialNumber
+        brand = self.brand
+        year = self.year
+        model = self.model
+        energy = self.energy
+        maxEnergy = self.maxEnergy
+        output = self.output
+        rechargeRate = self.rechargeRate
         
     def getOutput(self):
         return self.output
@@ -70,8 +84,16 @@ class WeaponModule:
     weaponType = Property(str, id=7, uid=6007)
     caliber = Property(int, id=8, uid=6008)
 
-    def __init__(self, string: str = ""):
+    def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, weaponType, caliber, string: str = ""):
         self.str = string
+        serialNumber = self.serialNumber
+        brand = self.brand
+        year = self.year
+        model = self.model
+        energy = self.energy
+        maxEnergy = self.maxEnergy
+        weaponType = self.weaponType
+        caliber = self.caliber
 
     def getType(self):
         return self.weaponType
@@ -90,8 +112,15 @@ class ShieldModule:
     maxEnergy = Property(int, id=6, uid=7006)
     size = Property(int, id=7, uid=7007)
 
-    def __init__(self, string: str = ""):
+    def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, size, string: str = ""):
         self.str = string
+        serialNumber = self.serialNumber
+        brand = self.brand
+        year = self.year
+        model = self.model
+        energy = self.energy
+        maxEnergy = self.maxEnergy
+        size = self.size
 
     def getSize(self):
         return self.size
