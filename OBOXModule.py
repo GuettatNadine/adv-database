@@ -72,6 +72,27 @@ class EnergyModule:
 
     def setRechargeRate(self, rechargeRate):
         self.rechargeRate = rechargeRate
+    
+    def getSerialNumber(self):
+        return self.serialNumber
+
+    def getBrand(self):
+        return self.brand
+
+    def getYear(self):
+        return self.year
+
+    def getModel(self):
+        return self.model
+
+    def getEnergy(self):
+        return self.energy
+
+    def getMaxEnergy(self):
+        return self.maxEnergy
+
+    def setEnergy(self, energy):
+        self.energy = energy
 
 @Entity(id=6, uid=6)
 class WeaponModule:
@@ -100,7 +121,27 @@ class WeaponModule:
 
     def getCaliber(self):
         return self.caliber
+    
+    def getSerialNumber(self):
+        return self.serialNumber
 
+    def getBrand(self):
+        return self.brand
+
+    def getYear(self):
+        return self.year
+
+    def getModel(self):
+        return self.model
+
+    def getEnergy(self):
+        return self.energy
+
+    def getMaxEnergy(self):
+        return self.maxEnergy
+
+    def setEnergy(self, energy):
+        self.energy = energy
 
 @Entity(id=7, uid=7)
 class ShieldModule:
@@ -124,3 +165,24 @@ class ShieldModule:
 
     def getSize(self):
         return self.size
+    
+    def getSerialNumber(self):
+        return self.serialNumber
+
+    def getBrand(self):
+        return self.brand
+
+    def getYear(self):
+        return self.year
+
+    def getModel(self):
+        return self.model
+
+    def getEnergy(self):
+        return self.energy
+
+    def getMaxEnergy(self):
+        return self.maxEnergy
+
+    def setEnergy(self, energy):
+        self.energy = energy

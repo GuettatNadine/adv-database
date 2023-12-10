@@ -73,6 +73,29 @@ class MotherShip:
     def addPassengers(self, passengers):  # Add passenger by id
         for member in passengers:
             self.passengers[member.getIdentifier()] = member
+    
+    def getSerialNumber(self):
+        return self.serialNumber
+
+    def getAffiliation(self):
+        return self.affiliation
+
+    def getCrew(self):
+        return list(self.crew.values())
+
+    def getModules(self, moduleType):
+        return list(self.modules[moduleType].values())
+
+    def setAffiliation(self, affiliation):
+        self.affiliation = affiliation
+
+    def addCrew(self, crew):  # Add Crew member by id
+        for member in crew:
+            self.crew[member.getIdentifier()] = member
+
+    def addModules(self, moduleType, modules):  # Add Module by type and id
+        for module in modules:
+            self.modules[moduleType][module.getSerialNumber()] = module
 
 @Entity(id=10, uid=10)
 class OtherShip:
@@ -103,6 +126,29 @@ class OtherShip:
 
     def setShipType(self, shipType):
         self.shipType = shipType
+    
+    def getSerialNumber(self):
+        return self.serialNumber
+
+    def getAffiliation(self):
+        return self.affiliation
+
+    def getCrew(self):
+        return list(self.crew.values())
+
+    def getModules(self, moduleType):
+        return list(self.modules[moduleType].values())
+
+    def setAffiliation(self, affiliation):
+        self.affiliation = affiliation
+
+    def addCrew(self, crew):  # Add Crew member by id
+        for member in crew:
+            self.crew[member.getIdentifier()] = member
+
+    def addModules(self, moduleType, modules):  # Add Module by type and id
+        for module in modules:
+            self.modules[moduleType][module.getSerialNumber()] = module
 
 @Entity(id=11, uid=11)
 class TransportShip:
@@ -140,9 +186,32 @@ class TransportShip:
     def addCargo(self, itemType, number):  # Add cargo item by name
         if not (itemType in self.cargo.keys()):
             self.cargo[itemType] = 0
-        self.cargo[itemType] += number
+        self.cargo[itemType] += int(number)
 
     def removeCargo(self, itemType, number):  # Remove Cargo Item by name and only removes the input value
         self.cargo[itemType] -= number
         if self.cargo[itemType] < 0:  # the min is an empty cargo
             self.cargo[itemType] = 0
+            
+    def getSerialNumber(self):
+        return self.serialNumber
+
+    def getAffiliation(self):
+        return self.affiliation
+
+    def getCrew(self):
+        return list(self.crew.values())
+
+    def getModules(self, moduleType):
+        return list(self.modules[moduleType].values())
+
+    def setAffiliation(self, affiliation):
+        self.affiliation = affiliation
+
+    def addCrew(self, crew):  # Add Crew member by id
+        for member in crew:
+            self.crew[member.getIdentifier()] = member
+
+    def addModules(self, moduleType, modules):  # Add Module by type and id
+        for module in modules:
+            self.modules[moduleType][module.getSerialNumber()] = module

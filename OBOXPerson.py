@@ -61,6 +61,21 @@ class MilitaryPerson:
 
     def setSpecialization(self, specialization):
         self.specialization = specialization
+    
+    def getIdentifier(self):
+        return self.identifier
+
+    def getName(self):
+        return self.name
+
+    def getAge(self):
+        return self.age
+
+    def setName(self, name):
+        self.name = name
+
+    def setAge(self, age):
+        self.age = age
 
 @Entity(id=3, uid=3)
 class CivilianPerson():
@@ -85,3 +100,17 @@ class CivilianPerson():
 
     def setOccupation(self, occupation):
         self.occupation = occupation
+    def getIdentifier(self):
+        return self.identifier
+
+    def getName(self):
+        return self.name
+
+    def getAge(self):
+        return self.age
+
+    def setName(self, name):
+        self.name = name
+
+    def setAge(self, age):
+        self.age = age
