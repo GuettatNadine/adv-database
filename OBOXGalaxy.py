@@ -4,12 +4,14 @@ import OBOXShip
 
 @Entity(id=12, uid=12)
 class Galaxy:
-    def __init__(self, identifier, name, universe):
-        self.identifier = Property(id=1, uid=12001)
-        self.name = Property(str, id=2, uid=12002)
-        self.universe = Property(str, id=3, uid=12003)
-        self.ships = Property(dict, type=OBOXShip.Ship, id=4, uid=12004)
-
+    identifier = Id(id=1, uid=12001)
+    name = Property(str, id=2, uid=12002)
+    universe = Property(str, id=3, uid=12003)
+    ships = Property(dict, type=PropertyType.long, id=4, uid=12004)
+        
+    def __init__(self, string: str = ""):
+        self.str = string
+        
     def getIdentifier(self):
         return self.identifier
 
@@ -22,7 +24,7 @@ class Galaxy:
     def addShip(self, ship):  # Add a ship based on it's affiliation
         affiliation = ship.getAffiliation()
         if not (affiliation in self.ships.keys()):  # If the affiliation is new create a new persistent Map
-            self.ships[affiliation] = Property(dict, type=OBOXShip.Ship, id=4, uid=4004) # ???
+            self.ships[affiliation] = Property(dict, type=PropertyType.long, id=4, uid=4004) # ???
         self.ships[affiliation][ship.getSerialNumber()] = ship
 
     def getShips(self, affiliation):

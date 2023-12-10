@@ -1,17 +1,18 @@
 from objectbox.model import *
-import OBOXPerson, OBOXModule
+
+import OBOXPerson
+import OBOXModule
 
 @Entity(id=8, uid=8)
 class Ship:
-    def __init__(self, serialNumber, affiliation):
-        self.serialNumber = Property(int, id = 1, uid = 8001)
-        self.affiliation = Property(str, id = 2, uid = 8002)
-        # persistant 
-        self.crew = Property(dict, type=OBOXPerson.Person, id=3, uid=8003)
-        self.modules = Property(dict, type=OBOXModule.Module, id=4, uid=8004)
-        self.modules["weapon"] = Property(dict, type=OBOXModule.WeaponModule, id=5, uid=8005)
-        self.modules["energy"] = Property(dict, type=OBOXModule.EnergyModule, id=6, uid=8006)
-        self.modules["shield"] = Property(dict, type=OBOXModule.ShieldModule, id=7, uid=8007)
+    serialNumber = Id(id=1, uid=8001)
+    affiliation = Property(str, id=2, uid=8002)
+    crew = Property(dict, type=PropertyType.long, id=3, uid=8003)
+    modules = Property(dict, type=PropertyType.long, id=4, uid=8004)
+
+    def __init__(self, string: str = ""):
+        self.str = string
+        self.modules = {"weapon": {}, "energy": {}, "shield": {}}
 
     def getSerialNumber(self):
         return self.serialNumber
@@ -36,12 +37,19 @@ class Ship:
         for module in modules:
             self.modules[moduleType][module.getSerialNumber()] = module
 
+
 @Entity(id=9, uid=9)
-class MotherShip(Ship):
-    def __init__(self, serialNumber, affiliation):
-        super().__init__(serialNumber, affiliation)
-        # persistant
-        self.passengers = Property(dict, type=OBOXPerson.Person, id=1, uid=9001)
+class MotherShip:
+    serialNumber = Id(id=1, uid=9001)
+    affiliation = Property(str, id=2, uid=9002)
+    crew = Property(dict, type=PropertyType.long, id=3, uid=9003)
+    modules = Property(dict, type=PropertyType.long, id=4, uid=9004)
+    passengers = Property(dict, type=PropertyType.long, id=5, uid=9005)
+    
+    def __init__(self, string: str = ""):
+        self.str = string
+        modules = {"weapon": {}, "energy": {}, "shield": {}}
+        
     def getPassengers(self):
         return list(self.passengers.values())
 
@@ -50,11 +58,16 @@ class MotherShip(Ship):
             self.passengers[member.getIdentifier()] = member
 
 @Entity(id=10, uid=10)
-class OtherShip(Ship):
-    def __init__(self, serialNumber, affiliation, shipType):
-        super().__init__(serialNumber, affiliation)
-        self.shipType = Property(str, id = 1, uid = 10001)
-
+class OtherShip:
+    serialNumber = Id(id=1, uid=10001)
+    affiliation = Property(str, id=2, uid=10002)
+    crew = Property(dict, type=PropertyType.long, id=3, uid=10003)
+    modules = Property(dict, type=PropertyType.long, id=4, uid=10004)
+    
+    def __init__(self, string: str = ""):
+        self.str = string
+        modules = {"weapon": {}, "energy": {}, "shield": {}}
+        
     def getShipType(self):
         return self.shipType
 
@@ -62,11 +75,17 @@ class OtherShip(Ship):
         self.shipType = shipType
 
 @Entity(id=11, uid=11)
-class TransportShip(Ship):
-    def __init__(self, serialNumber, affiliation):
-        super().__init__(serialNumber, affiliation)
-        self.cargo = Property(dict, type=str, id=1, uid=11001)
-
+class TransportShip:
+    serialNumber = Id(id=1, uid=11001)
+    affiliation = Property(str, id=2, uid=11002)
+    crew = Property(dict, type=PropertyType.long, id=3, uid=11003)
+    modules = Property(dict, type=PropertyType.long, id=4, uid=11004)
+    cargo = Property(dict, type=PropertyType.long, id=5, uid=11005)
+    
+    def __init__(self, string: str = ""):
+        self.str = string
+        modules = {"weapon": {}, "energy": {}, "shield": {}}
+    
     def getCargo(self):
         return list(self.cargo.keys())
 

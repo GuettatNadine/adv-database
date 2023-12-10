@@ -2,14 +2,16 @@ from objectbox.model import *
 
 @Entity(id=4, uid=4)
 class Module:
-    def __init__(self, serialNumber, brand, year, model, energy, maxEnergy):
-        self.serialNumber = Property(int, id=1, uid=4001)
-        self.brand = Property(str, id=2, uid=4002)
-        self.year = Property(int, id=3, uid=4003)
-        self.model = Property(str, id=4, uid=4004)
-        self.energy = Property(int, id=5, uid=4005)
-        self.maxEnergy = Property(int, id=6, uid=4006)
-
+    serialNumber = Id(id=1, uid=4001)
+    brand = Property(str, id=2, uid=4002)
+    year = Property(int, id=3, uid=4003)
+    model = Property(str, id=4, uid=4004)
+    energy = Property(int, id=5, uid=4005)
+    maxEnergy = Property(int, id=6, uid=4006)
+    
+    def __init__(self, string: str = ""):
+        self.str = string
+    
     def getSerialNumber(self):
         return self.serialNumber
 
@@ -31,14 +33,20 @@ class Module:
     def setEnergy(self, energy):
         self.energy = energy
 
-
 @Entity(id=5, uid=5)
-class EnergyModule(Module):
-    def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, output, rechargeRate):
-        super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.output = Property(int, id=1, uid=5001)
-        self.rechargeRate = Property(int, id=2, uid=5002)
+class EnergyModule:
+    serialNumber = Id(id=1, uid=5001)
+    brand = Property(str, id=2, uid=5002)
+    year = Property(int, id=3, uid=5003)
+    model = Property(str, id=4, uid=5004)
+    energy = Property(int, id=5, uid=5005)
+    maxEnergy = Property(int, id=6, uid=5006)
+    output = Property(int, id=7, uid=5007)
+    rechargeRate = Property(int, id=8, uid=5008)
 
+    def __init__(self, string: str = ""):
+        self.str = string
+        
     def getOutput(self):
         return self.output
 
@@ -51,13 +59,19 @@ class EnergyModule(Module):
     def setRechargeRate(self, rechargeRate):
         self.rechargeRate = rechargeRate
 
-
 @Entity(id=6, uid=6)
-class WeaponModule(Module):
-    def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, weaponType, caliber):
-        super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.weaponType = Property(str, id=1, uid=6001)
-        self.caliber = Property(int, id=2, uid=6002)
+class WeaponModule:
+    serialNumber = Id(id=1, uid=6001)
+    brand = Property(str, id=2, uid=6002)
+    year = Property(int, id=3, uid=6003)
+    model = Property(str, id=4, uid=6004)
+    energy = Property(int, id=5, uid=6005)
+    maxEnergy = Property(int, id=6, uid=6006)
+    weaponType = Property(str, id=7, uid=6007)
+    caliber = Property(int, id=8, uid=6008)
+
+    def __init__(self, string: str = ""):
+        self.str = string
 
     def getType(self):
         return self.weaponType
@@ -67,10 +81,17 @@ class WeaponModule(Module):
 
 
 @Entity(id=7, uid=7)
-class ShieldModule(Module):
-    def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, size):
-        super().__init__(serialNumber, brand, year, model, energy, maxEnergy)
-        self.size = Property(int, id=1, uid=7001)
+class ShieldModule:
+    serialNumber = Id(id=1, uid=7001)
+    brand = Property(str, id=2, uid=7002)
+    year = Property(int, id=3, uid=7003)
+    model = Property(str, id=4, uid=7004)
+    energy = Property(int, id=5, uid=7005)
+    maxEnergy = Property(int, id=6, uid=7006)
+    size = Property(int, id=7, uid=7007)
+
+    def __init__(self, string: str = ""):
+        self.str = string
 
     def getSize(self):
         return self.size

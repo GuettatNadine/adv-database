@@ -2,11 +2,13 @@ from objectbox.model import *
 
 @Entity(id=1, uid=1)
 class Person:
-    def __init__(self, identifier, name, age):
-        self.identifier = Property(id = 1, uid = 1001)
-        self.name = Property(str, id = 2, uid = 1002)
-        self.age = Property(int, id = 3, uid = 1003)
-
+    identifier = Id(id = 1, uid = 1001)
+    name = Property(str, id = 2, uid = 1002)
+    age = Property(int, id = 3, uid = 1003)
+    
+    def __init__(self, string: str = ""):
+        self.str = string
+    
     def __str__(self):  # Print
         return f"{self.identifier} {self.name} {self.age}"
 
@@ -26,12 +28,16 @@ class Person:
         self.age = age
 
 @Entity(id=2, uid=2)
-class MilitaryPerson(Person):
-    def __init__(self, identifier, name, age, rank, specialization):
-        super().__init__(identifier, name, age)
-        self.rank = Property(int, id = 1, uid = 2001)
-        self.specialization = Property(str, id = 2, uid = 2002)
-
+class MilitaryPerson():
+    identifier = Id(id = 1, uid = 2001)
+    name = Property(str, id = 2, uid = 2002)
+    age = Property(int, id = 3, uid = 2003)
+    rank = Property(int, id = 4, uid = 2004)
+    specialization = Property(str, id = 5, uid = 2005)        
+    
+    def __init__(self, string: str = ""):
+        self.str = string
+    
     def __str__(self):  # Print
         base_class = super().__str__()
         return f"{base_class} {self.rank} {self.specialization}"
@@ -49,10 +55,14 @@ class MilitaryPerson(Person):
         self.specialization = specialization
 
 @Entity(id=3, uid=3)
-class CivilianPerson(Person):
-    def __init__(self, identifier, name, age, occupation):
-        super().__init__(identifier, name, age)
-        self.occupation = Property(str, id = 1,   uid = 3001)
+class CivilianPerson():
+    identifier = Id(id = 1, uid = 3001)
+    name = Property(str, id = 2, uid = 3002)
+    age = Property(int, id = 3, uid = 3003)
+    occupation = Property(str, id = 4,   uid = 3004)
+    
+    def __init__(self, string: str = ""):
+        self.str = string
 
     def __str__(self):  # Print
         base_class = super().__str__()
