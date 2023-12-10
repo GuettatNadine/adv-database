@@ -11,10 +11,10 @@ class Galaxy:
 
     def __init__(self, identifier, name, universe, string: str = ""):
         self.str = string
-        identifier = self.identifier
-        name = self.name
-        universe = self.universe
-        ships = {}
+        self.identifier = identifier
+        self.name = name
+        self.universe = universe
+        self.ships = {}
         
     def getIdentifier(self):
         return self.identifier

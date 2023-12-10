@@ -9,14 +9,15 @@ class Ship:
     affiliation = Property(str, id=2, uid=8002)
     crew = Property(dict, type=PropertyType.long, id=3, uid=8003)
     modules = Property(dict, type=PropertyType.long, id=4, uid=8004)
-
+        
     def __init__(self, serialNumber, affiliation, string: str = ""):
         self.str = string
-        serialNumber = self.serialNumber
-        affiliation = self.affiliation
-        crew = {}
-        cargo = {}
+        self.serialNumber = serialNumber
+        self.affiliation = affiliation
+        self.crew = {}
+        self.modules = {"weapon": {}, "energy": {}, "shield": {}}
 
+        
     def getSerialNumber(self):
         return self.serialNumber
 
@@ -48,14 +49,23 @@ class MotherShip:
     crew = Property(dict, type=PropertyType.long, id=3, uid=9003)
     modules = Property(dict, type=PropertyType.long, id=4, uid=9004)
     passengers = Property(dict, type=PropertyType.long, id=5, uid=9005)
-    
+#     
+#     def __init__(self, serialNumber, affiliation, string: str = ""):
+#         self.str = string
+#         serialNumber = self.serialNumber
+#         affiliation = self.affiliation
+#         crew = {}
+#         modules = {"weapon": {}, "energy": {}, "shield": {}}
+#         passenger = {}
+#     
     def __init__(self, serialNumber, affiliation, string: str = ""):
         self.str = string
-        serialNumber = self.serialNumber
-        affiliation = self.affiliation
-        crew = {}
-        modules = {"weapon": {}, "energy": {}, "shield": {}}
-        passenger = {}
+        self.serialNumber = serialNumber
+        self.affiliation = affiliation
+        self.crew = {}
+        self.modules = {"weapon": {}, "energy": {}, "shield": {}}
+        self.passengers = {}
+
         
     def getPassengers(self):
         return list(self.passengers.values())
@@ -70,15 +80,23 @@ class OtherShip:
     affiliation = Property(str, id=2, uid=10002)
     crew = Property(dict, type=PropertyType.long, id=3, uid=10003)
     modules = Property(dict, type=PropertyType.long, id=4, uid=10004)
-    shiptype = Property(int, id=5, uid=10005)
-    
+    shipType = Property(int, id=5, uid=10005)
+#     
+#     def __init__(self, serialNumber, affiliation, shipType, string: str = ""):
+#         self.str = string
+#         serialNumber = self.serialNumber
+#         affiliation = self.affiliation
+#         crew = {}
+#         modules = {"weapon": {}, "energy": {}, "shield": {}}
+#         shipType = self.shipType
     def __init__(self, serialNumber, affiliation, shipType, string: str = ""):
         self.str = string
-        serialNumber = self.serialNumber
-        affiliation = self.affiliation
-        crew = {}
-        modules = {"weapon": {}, "energy": {}, "shield": {}}
-        shiptype = self.shiptype
+        self.serialNumber = serialNumber
+        self.affiliation = affiliation
+        self.crew = {}
+        self.modules = {"weapon": {}, "energy": {}, "shield": {}}
+        self.shipType = shipType
+
         
     def getShipType(self):
         return self.shipType
@@ -93,14 +111,22 @@ class TransportShip:
     crew = Property(dict, type=PropertyType.long, id=3, uid=11003)
     modules = Property(dict, type=PropertyType.long, id=4, uid=11004)
     cargo = Property(dict, type=PropertyType.long, id=5, uid=11005)
+# 
+#     def __init__(self, serialNumber, affiliation, string: str = ""):
+#         self.str = string
+#         serialNumber = self.serialNumber
+#         affiliation = self.affiliation
+#         crew = {}
+#         modules = {"weapon": {}, "energy": {}, "shield": {}}
+#         cargo = {}
 
     def __init__(self, serialNumber, affiliation, string: str = ""):
         self.str = string
-        serialNumber = self.serialNumber
-        affiliation = self.affiliation
-        crew = {}
-        modules = {"weapon": {}, "energy": {}, "shield": {}}
-        cargo = {}
+        self.serialNumber = serialNumber
+        self.affiliation = affiliation
+        self.crew = {}
+        self.modules = {"weapon": {}, "energy": {}, "shield": {}}
+        self.cargo = {}
          
     def getCargo(self):
         return list(self.cargo.keys())

@@ -11,12 +11,12 @@ class Module:
     
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, string: str = ""):
         self.str = string
-        serialNumber = self.serialNumber
-        brand = self.brand
-        year = self.year
-        model = self.model
-        energy = self.energy
-        maxEnergy = self.maxEnergy
+        self.serialNumber = serialNumber
+        self.brand = brand
+        self.year = year
+        self.model = model
+        self.energy = energy
+        self.maxEnergy = maxEnergy
     
     def getSerialNumber(self):
         return self.serialNumber
@@ -52,14 +52,14 @@ class EnergyModule:
 
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, output, rechargeRate, string: str = ""):
         self.str = string
-        serialNumber = self.serialNumber
-        brand = self.brand
-        year = self.year
-        model = self.model
-        energy = self.energy
-        maxEnergy = self.maxEnergy
-        output = self.output
-        rechargeRate = self.rechargeRate
+        self.serialNumber = serialNumber
+        self.brand = brand
+        self.year = year
+        self.model = model
+        self.energy = energy
+        self.maxEnergy = maxEnergy
+        self.output = output
+        self.rechargeRate = rechargeRate
         
     def getOutput(self):
         return self.output
@@ -86,14 +86,14 @@ class WeaponModule:
 
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, weaponType, caliber, string: str = ""):
         self.str = string
-        serialNumber = self.serialNumber
-        brand = self.brand
-        year = self.year
-        model = self.model
-        energy = self.energy
-        maxEnergy = self.maxEnergy
-        weaponType = self.weaponType
-        caliber = self.caliber
+        self.serialNumber = serialNumber
+        self.brand = brand
+        self.year = year
+        self.model = model
+        self.energy = energy
+        self.maxEnergy = maxEnergy
+        self.weaponType = weaponType
+        self.caliber = caliber
 
     def getType(self):
         return self.weaponType
@@ -114,13 +114,13 @@ class ShieldModule:
 
     def __init__(self, serialNumber, brand, year, model, energy, maxEnergy, size, string: str = ""):
         self.str = string
-        serialNumber = self.serialNumber
-        brand = self.brand
-        year = self.year
-        model = self.model
-        energy = self.energy
-        maxEnergy = self.maxEnergy
-        size = self.size
+        self.serialNumber = serialNumber
+        self.brand = brand
+        self.year = year
+        self.model = model
+        self.energy = energy
+        self.maxEnergy = maxEnergy
+        self.size = size
 
     def getSize(self):
         return self.size

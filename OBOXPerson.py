@@ -6,8 +6,11 @@ class Person:
     name = Property(str, id = 2, uid = 1002)
     age = Property(int, id = 3, uid = 1003)
     
-    def __init__(self, string: str = ""):
+    def __init__(self, identifier,  name, age, string: str = ""):
         self.str = string
+        self.identifier = identifier
+        self.name = name
+        self.age = age
     
     def __str__(self):  # Print
         return f"{self.identifier} {self.name} {self.age}"
@@ -28,7 +31,7 @@ class Person:
         self.age = age
 
 @Entity(id=2, uid=2)
-class MilitaryPerson():
+class MilitaryPerson:
     identifier = Id(id = 1, uid = 2001)
     name = Property(str, id = 2, uid = 2002)
     age = Property(int, id = 3, uid = 2003)
@@ -37,9 +40,11 @@ class MilitaryPerson():
     
     def __init__(self, identifier, name, age, rank, specialization, string: str = ""):
         self.str = string
-        identifier = self.identifier
-        name = self.name
-        age = self.age
+        self.identifier = identifier
+        self.name = name
+        self.age = age
+        self.rank = rank
+        self.specialization = specialization
     
     def __str__(self):  # Print
         base_class = super().__str__()
