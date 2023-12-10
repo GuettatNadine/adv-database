@@ -187,5 +187,5 @@ def getTestData(n, filename):
 
 sampleSize = input("sample size (number of objects) : ")
 fileName = input("file name : ")
-fileName += sampleSize
+#fileName += sampleSize
 print(getTestData(int(sampleSize), fileName))

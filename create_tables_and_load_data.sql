@@ -95,25 +95,25 @@ CREATE TABLE IF NOT EXISTS WeaponModules (
 
 -- Load data from CSV files into respective tables using INSERT ... ON DUPLICATE KEY UPDATE
 COPY Galaxies
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\Galaxies500.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\Galaxies.csv' HEADER CSV DELIMITER ',';
 
 COPY Ships
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\Ships500.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\Ships.csv' HEADER CSV DELIMITER ',';
 
 COPY CargoItems
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\CargoItems500.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\CargoItems.csv' HEADER CSV DELIMITER ',';
 
 COPY ShieldModules
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\ShieldModules500.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\ShieldModules.csv' HEADER CSV DELIMITER ',';
 
 COPY MilitaryPersons
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\MilitaryPersons500.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\MilitaryPersons.csv' HEADER CSV DELIMITER ',';
 
 COPY EnergyModules
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\EnergyModules500.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\EnergyModules.csv' HEADER CSV DELIMITER ',';
 
 COPY CivilianPersons
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\CivilianPersons500.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\CivilianPersons.csv' HEADER CSV DELIMITER ',';
 
 COPY WeaponModules
-FROM 'C:\Users\bluenot\PycharmProjects\adv-database\WeaponModules500.csv' HEADER CSV DELIMITER ',';
+FROM 'C:\Users\bluenot\PycharmProjects\adv-database\WeaponModules.csv' HEADER CSV DELIMITER ',';

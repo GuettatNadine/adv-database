@@ -213,14 +213,14 @@ def main():
         root['galaxy'] = BTrees.OOBTree.BTree()
 
         # Creating and inserting the galaxies into the database from the CSV file
-        root = insertGalaxy("Galaxies500.csv", root)
+        root = insertGalaxy("Galaxies.csv", root)
 
         # Creating the Objects composing a ship
-        dictShipObj, root = insertIntoShips("MilitaryPersons500.csv", "CivilianPersons500.csv", "ShieldModules500.csv",
-                                            "EnergyModules500.csv", "WeaponModules500.csv", "CargoItems500.csv", root)
+        dictShipObj, root = insertIntoShips("MilitaryPersons.csv", "CivilianPersons.csv", "ShieldModules.csv",
+                                            "EnergyModules.csv", "WeaponModules.csv", "CargoItems.csv", root)
 
         # Creating ships and adding modules and persons in them and inserting the ships in the database
-        root = insertShips("Ships500.csv", dictShipObj, root)
+        root = insertShips("Ships.csv", dictShipObj, root)
 
         # Close the connection to the database
         connection.close()
@@ -243,6 +243,7 @@ def main():
 
         # Queries :
         """First Query Select : """
+
         count = 0
         affiliation = str("khanid kingdom")
         found = False
@@ -312,7 +313,7 @@ def main():
                             tempType = "transport"
                         else:
                             tempType = ship.getShipType()
-                        result.append([ship.getSerialNumber(), tempType, root["galaxy"].get(g).getName()])
+                        result.append([ship.getSerialNumber(), tempType, root["galaxy"].get(g)])
                         count += 1
 
         # Record end time
@@ -324,24 +325,27 @@ def main():
         print("results found : ")
         print("id   |   ship type   |   location")
         for res in result:
-            print(res[0], "     ", res[1], "     ", res[2])
+            print(res[0], "     ", res[1], "     ", res[2].getName())
         print(f"Elapsed time for the second query: {elapsed_seconds:.6f} seconds\n")
 
         """Third Query Add : """
-
-        for ship in root["galaxy"].get(str(0)).getShips(affiliation):  # print last crew member added
-            if ship.getSerialNumber() == result[0][0]:
-                print("last crew member added before insert : ", ship.getCrew()[-1], "\n")
-                break
+        for g in root["galaxy"]:
+            if affiliation in root["galaxy"].get(g).ships.keys():
+                for ship in root["galaxy"].get(g).getShips(affiliation):  # print last crew member added
+                    if ship.getSerialNumber() == 0:
+                        print("last crew member added before insert : ", ship.getCrew()[-1], "\n")
+                        break
 
         # Record start time
         start_time = time.time()
-        for ship in root["galaxy"].get(str(0)).getShips(affiliation):
-            if ship.getSerialNumber() == result[0][0]:
-                root["military_num"] += 1
-                tempMilitaryPerson = Person.MilitaryPerson(root["military_num"], "Query McGuyer", 25, 3, "engineer")
-                ship.addCrew([tempMilitaryPerson])
-                break
+        for g in root["galaxy"]:
+            if affiliation in root["galaxy"].get(g).ships.keys():
+                for ship in root["galaxy"].get(g).getShips(affiliation):
+                    if ship.getSerialNumber() == 0:
+                        root["military_num"] += 1
+                        tempMilitaryPerson = Person.MilitaryPerson(root["military_num"], "Query McGuyer", 25, 3, "engineer")
+                        ship.addCrew([tempMilitaryPerson])
+                        break
         transaction.commit()  # Register the modification (transaction) into the database
         # Record end time
         end_time = time.time()
@@ -349,18 +353,22 @@ def main():
         # Calculate elapsed time
         elapsed_seconds = end_time - start_time
 
-        for ship in root["galaxy"].get(str(0)).getShips(affiliation):  # print last crew member added
-            if ship.getSerialNumber() == result[0][0]:
-                print("last crew member added after insert : ", ship.getCrew()[-1], "\n")
-                break
+        for g in root["galaxy"]:
+            if affiliation in root["galaxy"].get(g).ships.keys():
+                for ship in root["galaxy"].get(g).getShips(affiliation):  # print last crew member added
+                    if ship.getSerialNumber() == 0:
+                        print("last crew member added after insert : ", ship.getCrew()[-1], "\n")
+                        break
 
         """Fourth Query Delete : """
         # Record start time
         start_time = time.time()
-        for ship in root["galaxy"].get(str(0)).getShips(affiliation):
-            if ship.getSerialNumber() == result[0][0]:
-                del ship.crew[root["military_num"]]
-                break
+        for g in root["galaxy"]:
+            if affiliation in root["galaxy"].get(g).ships.keys():
+                for ship in root["galaxy"].get(g).getShips(affiliation):
+                    if ship.getSerialNumber() == 0:
+                        del ship.crew[root["military_num"]]
+                        break
         transaction.commit()  # Register the modification (transaction) into the database
         # Record end time
         end_time = time.time()
@@ -369,10 +377,12 @@ def main():
         elapsed_seconds = end_time - start_time
         print(f"Elapsed time for the fourth query: {elapsed_seconds:.6f} seconds\n")
 
-        for ship in root["galaxy"].get(str(0)).getShips(affiliation):  # print last crew member added
-            if ship.getSerialNumber() == result[0][0]:
-                print("last crew member added : ", ship.getCrew()[-1], "\n")
-                break
+        for g in root["galaxy"]:
+            if affiliation in root["galaxy"].get(g).ships.keys():
+                for ship in root["galaxy"].get(g).getShips(affiliation):  # print last crew member added
+                    if ship.getSerialNumber() == 0:
+                        print("last crew member added after delete : ", ship.getCrew()[-1], "\n")
+                        break
 
         # Close the connection to the database
         connection.close()
