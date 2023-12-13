@@ -1,11 +1,11 @@
-DELETE FROM CargoItems;
-DELETE FROM CivilianPersons;
-DELETE FROM EnergyModules;
-DELETE FROM MilitaryPersons;
-DELETE FROM ShieldModules;
-DELETE FROM WeaponModules;
-DELETE FROM Ships;
-DELETE FROM Galaxies;
+DROP TABLE IF EXISTS CargoItems;
+DROP TABLE IF EXISTS CivilianPersons;
+DROP TABLE IF EXISTS EnergyModules;
+DROP TABLE IF EXISTS MilitaryPersons;
+DROP TABLE IF EXISTS ShieldModules;
+DROP TABLE IF EXISTS WeaponModules;
+DROP TABLE IF EXISTS Ships;
+DROP TABLE IF EXISTS Galaxies;
 -- Create Galaxies Table if not exists
 CREATE TABLE IF NOT EXISTS Galaxies (
     galaxy_id INT PRIMARY KEY,
